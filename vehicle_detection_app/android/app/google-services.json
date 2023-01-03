@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "446921544901",
+    "project_id": "automatedvehicledetection",
+    "storage_bucket": "automatedvehicledetection.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446921544901:android:e9e6f6f6a9c7e7702e8cac",
+        "android_client_info": {
+          "package_name": "com.example.vehicle_detection_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446921544901-v21neltl5j1u8bmqd3uum63p5bigiauk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAReY95ucpwGvKWLJcy_k64G0QpvhNvvrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446921544901-v21neltl5j1u8bmqd3uum63p5bigiauk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
