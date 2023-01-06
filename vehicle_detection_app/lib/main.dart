@@ -8,11 +8,32 @@ import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/profile_setting_option.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:vehicle_detection_app/pages/sign_up.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-void main() {
-  runApp(const MaterialApp(
+// void main() {
+//   runApp(const MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     home: MyApp(),
+//   ));
+// }
+
+
+Future main() async {                                         
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp( const MaterialApp(
+    // theme: ThemeData(fontFamily: 'Releway'),
     debugShowCheckedModeBanner: false,
     home: MyApp(),
+    
+    // initialRoute: '/',
+    // routes: {
+    //   '/': (context) => DetailPage()
+    // },
   ));
 }
 

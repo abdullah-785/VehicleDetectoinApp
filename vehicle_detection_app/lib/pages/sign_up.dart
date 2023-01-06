@@ -1,16 +1,21 @@
 import 'dart:io';
 
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
+import 'package:vehicle_detection_app/pages/login.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:path/path.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -22,6 +27,16 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   int currentIndex = 0;
   File? file;
+  String? imageUrl;
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   ImagePicker image = ImagePicker();
 
@@ -58,28 +73,6 @@ class _SignUpState extends State<SignUp> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Spacer(),
-                Badge(
-                    badgeColor: const Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
-                    badgeContent: const Padding(
-                      padding: EdgeInsets.all(1.0),
-                      child: Text(
-                        "2",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             const NotificationPage()));
-                      },
-                      child: const Icon(Icons.notifications,
-                          size: 30, color: Color.fromARGB(255, 23, 69, 103)),
-                    )),
               ],
             ),
           ),
@@ -110,7 +103,6 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 30,
                     ),
-
                     GestureDetector(
                       onTap: () {
                         selectFile();
@@ -122,11 +114,13 @@ class _SignUpState extends State<SignUp> {
                             : Image.file(file!).image,
                       ),
                     ),
-                    SizedBox(height: 15,),
-                    
+                    SizedBox(
+                      height: 15,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -171,6 +165,7 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _passwordController,
                           obscureText: true,
                           style: const TextStyle(
                             fontSize: 20,
@@ -215,6 +210,7 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _confirmPasswordController,
                           obscureText: true,
                           style: const TextStyle(
                             fontSize: 20,
@@ -256,10 +252,10 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 15,
                     ),
-
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _cityController,
                           keyboardType: TextInputType.text,
                           style: const TextStyle(
                             fontSize: 20,
@@ -292,7 +288,7 @@ class _SignUpState extends State<SignUp> {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: const Icon(
-                                  Icons.location_city_rounded ,
+                                  Icons.location_city_rounded,
                                   color: Colors.white,
                                   size: 30,
                                 ),
@@ -301,11 +297,10 @@ class _SignUpState extends State<SignUp> {
                     const SizedBox(
                       height: 15,
                     ),
-
-
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _phoneNumberController,
                           keyboardType: TextInputType.number,
                           style: const TextStyle(
                             fontSize: 20,
@@ -344,43 +339,36 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ))),
                     ),
-
-
-                     const SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-
-
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
-                        minLines: 3,
-                        maxLines: 5,
+                          controller: _descriptionController,
+                          minLines: 3,
+                          maxLines: 5,
                           keyboardType: TextInputType.multiline,
                           style: const TextStyle(
                             fontSize: 20,
                           ),
                           decoration: const InputDecoration(
-                              label: Text(
-                                "Description",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                ),
+                            label: Text(
+                              "Description",
+                              style: TextStyle(
+                                color: Colors.grey,
                               ),
-                              hintText: "Write something",
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Color.fromARGB(255, 78, 206, 113))),
-                              border: OutlineInputBorder(),
-                              )),
+                            ),
+                            hintText: "Write something",
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 78, 206, 113))),
+                            border: OutlineInputBorder(),
+                          )),
                     ),
-
-                    
                     SizedBox(
                       height: 30,
                     ),
-
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.92,
                       height: 50,
@@ -388,11 +376,90 @@ class _SignUpState extends State<SignUp> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 78, 206, 113),
                           ),
-                          onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => OptVerification()));
+                          onPressed: () async {
+                            if (file == null) {
+                              Fluttertoast.showToast(
+                                  msg: "Please Select an Image");
+                              return;
+                            }
+
+                            try {
+                              if (_emailController.text.length <= 7) {
+                                Fluttertoast.showToast(
+                                    msg: "Email must be greater than 8");
+                                return;
+                              } else if (_passwordController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please provide password");
+                                return;
+                              } else if (_passwordController.text.length < 7) {
+                                Fluttertoast.showToast(
+                                    msg: "Password character atleast 8");
+                                return;
+                              } else if (_passwordController ==
+                                  _confirmPasswordController.text) {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Password and confirm password are not same");
+                                return;
+                              } else if (_cityController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter your city");
+                                return;
+                              } else if (_phoneNumberController.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: "Please enter your city");
+                                return;
+                              } else if (_phoneNumberController.text.length !=
+                                  11) {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "Please provide a valid email address");
+                                return;
+                              } else {
+                                final ref = FirebaseStorage.instance
+                                    .ref()
+                                    .child("userImage")
+                                    .child(DateTime.now().toString());
+                                await ref.putFile(file!);
+                                imageUrl = await ref.getDownloadURL();
+                                await _auth.createUserWithEmailAndPassword(
+                                  email: _emailController.text
+                                      .trim()
+                                      .toLowerCase(),
+                                  password: _passwordController.text.trim(),
+                                );
+
+                                FirebaseFirestore firebaseFirestore =
+                                    FirebaseFirestore.instance;
+                                User? user = _auth.currentUser;
+
+                                SignUpModel signUpModel = SignUpModel();
+
+                                // writing all the values
+                                signUpModel.uid = user!.uid;
+                                signUpModel.imageUrl = imageUrl;
+                                signUpModel.email = _emailController.text;
+                                signUpModel.password = _passwordController.text;
+                                signUpModel.confirmPassword =
+                                    _confirmPasswordController.text;
+                                signUpModel.phoneNumber =
+                                    _phoneNumberController.text;
+
+                                await firebaseFirestore
+                                    .collection("users")
+                                    .doc(user.uid)
+                                    .set(signUpModel.toMap());
+                                Fluttertoast.showToast(
+                                    msg: "Account created successfully :) ");
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const Login()));
+                              }
+                            } catch (e) {
+                              Fluttertoast.showToast(msg: "${e}");
+                            }
                           },
                           child: const Text(
                             "Sign Up",
@@ -407,43 +474,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color.fromARGB(255, 23, 69, 103),
-        unselectedItemColor: const Color.fromARGB(255, 23, 69, 103),
-        iconSize: 30,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Setting()));
-                },
-                child: const Icon(Icons.settings)),
-            label: 'Setting',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => InputVideo()));
-                },
-                child: const Icon(Icons.add_a_photo)),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profile()));
-                },
-                child: const Icon(Icons.account_circle)),
-            label: 'Profile',
           ),
         ],
       ),
