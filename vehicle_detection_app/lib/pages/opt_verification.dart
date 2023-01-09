@@ -1,55 +1,75 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_auth/email_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
+import 'package:vehicle_detection_app/pages/profile.dart';
 import 'dart:io' show Platform;
 
 import 'package:vehicle_detection_app/pages/setting.dart';
+import 'package:vehicle_detection_app/pages/sign_up.dart';
 
 class OptVerification extends StatefulWidget {
-  // final String _email;
-
-  // OptVerification(this._email);
-
   @override
   State<OptVerification> createState() => _OptVerificationState();
 }
 
 class _OptVerificationState extends State<OptVerification> {
-  String? fcm;
-  String? os;
+  User? user = FirebaseAuth.instance.currentUser;
+  SignUpModel loggedInUser = SignUpModel();
+
   @override
   void initState() {
     super.initState();
-    // getFCM();
-    // bar.show(context);
-    // OptVerification();
+
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      loggedInUser = SignUpModel.fromMap(value.data());
+      setState(() {});
+    });
+
+    // sendOtp();
   }
 
   // late EmailAuth emailAuth;
+  // String em = "abdbutt2001@gmail.com";
   bool submitValid = false;
   bool isLoading = false;
   final TextEditingController _optController = TextEditingController();
 
   // void sendOtp() async {
-  //   emailAuth = new EmailAuth(
-  //     sessionName: "Ealaka App",
-  //   );
-  //   bool result = (await emailAuth.sendOtp(
-  //       recipientMail: "${loggedInUser.email}", otpLength: 4));
-  //   if (result) {
-  //     setState(() {
-  //       submitValid = true;
-  //     });
-  //   }
+
+  // emailAuth = new EmailAuth(
+  //   sessionName: "Ealaka App",
+  // );
+  // bool result = (await emailAuth.sendOtp(recipientMail: em, otpLength: 4));
+
+  // if (result) {
+  //   setState(() {
+  //     submitValid = true;
+  //   });
   // }
 
-  // void verify() async {
-  //   String email = widget._email;
-  //   String otp = _optController.text;
-  //   setState(() {
-  //     isLoading = true;
-  //   });
-  //   await verifyOTPCall(email, otp, fcm ?? "", os ?? "").then((value) =>
-  //       // print("done")
-  //       callApi(value));
+  // print("Successfully send ending");
+  // }
+
+  // void verify() {
+  //   bool result = emailAuth.validateOtp(
+  //       recipientMail: "${em}", userOtp: _optController.text);
+
+  //   if (result == true) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => Profile()));
+  //     Fluttertoast.showToast(msg: "Login Successfully");
+  //   } else {
+  //     Fluttertoast.showToast(msg: "OPT is not Correct");
+  //     print("Wrong OTP");
+  //   }
   // }
 
   // setPrefranceData() async {
@@ -98,7 +118,7 @@ class _OptVerificationState extends State<OptVerification> {
                           height: 10,
                         ),
                   // Text("${loggedInUser.phoneNumber}"),
-                  const Text(
+                  Text(
                     "Enter OTP Code",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
@@ -118,13 +138,6 @@ class _OptVerificationState extends State<OptVerification> {
                   const SizedBox(
                     height: 40,
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 32),
-                  //   child: TextFormField(
-                  //         controller: _optController,
-
-                  //       ),
-                  // ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -166,6 +179,7 @@ class _OptVerificationState extends State<OptVerification> {
                               ),
                             ))),
                   ),
+
                   Row(
                     children: const [],
                   ),
@@ -182,11 +196,20 @@ class _OptVerificationState extends State<OptVerification> {
                     height: 50,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: const Color.fromARGB(255, 78, 206, 113),
-                          onPrimary: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 78, 206, 113),
                         ),
                         onPressed: () {
                           // verify();
+
+                          global_uid = loggedInUser.uid;
+                          global_imageUrl = loggedInUser.imageUrl;
+                          global_name = loggedInUser.name;
+                          global_email = loggedInUser.email;
+                          global_password = loggedInUser.password;
+                          global_confirmPassword = loggedInUser.confirmPassword;
+                          global_city = loggedInUser.city;
+                          global_phoneNumber = loggedInUser.phoneNumber;
+                          global_description = loggedInUser.description;
 
                           // FirebaseFirestore firebaseFirestore =
                           //           FirebaseFirestore.instance;
@@ -201,7 +224,10 @@ class _OptVerificationState extends State<OptVerification> {
                           //   Navigator.push(context, MaterialPageRoute(builder: (context) => const NewPassword()));
                           // }
 
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Setting()));
                         },
                         child: const Text(
                           "Submit",
@@ -215,9 +241,7 @@ class _OptVerificationState extends State<OptVerification> {
                   InkWell(
                     onTap: () {
                       // sendOtp();
-                      // Fluttertoast.showToast(msg: "OTP Send Successfully");
                       // bar.show(context);
-                      
                     },
                     child: const Text("Resend OTP",
                         style: TextStyle(
@@ -235,64 +259,16 @@ class _OptVerificationState extends State<OptVerification> {
     );
   }
 
-  // _verifyPhone() async {
-  //   await FirebaseAuth.instance.verifyPhoneNumber(
-  //       phoneNumber: '${loggedInUser.phoneNumber}}',
-  //       verificationCompleted: (PhoneAuthCredential credential) async {
-  //         await FirebaseAuth.instance
-  //             .signInWithCredential(credential)
-  //             .then((value) async {
-  //           if (value.user != null) {
-  //             Navigator.pushAndRemoveUntil(
-  //                 context,
-  //                 MaterialPageRoute(builder: (context) => NewPassword()),
-  //                 (route) => false);
-  //           }
-  //         });
-  //       },
-  //       verificationFailed: (FirebaseAuthException e) {
-  //         print(e.message);
-  //       },
-  //       codeSent: (String? verficationID, int? resendToken) {
-  //         setState(() {
-  //           _verificationCode = verficationID;
-  //         });
-  //       },
-  //       codeAutoRetrievalTimeout: (String verificationID) {
-  //         setState(() {
-  //           _verificationCode = verificationID;
-  //         });
-  //       },
-  //       timeout: Duration(seconds: 120));
+  // void sendOtp() async {
+  //   emailAuth = new EmailAuth(
+  //     sessionName: "Vehicle Detection App",
+  //   );
+  //   bool result = (await emailAuth.sendOtp(
+  //       recipientMail: "abdbutt2001@gmail.com", otpLength: 4));
+  //   if (result) {
+  //     setState(() {
+  //       submitValid = true;
+  //     });
+  //   }
   // }
-
-  // @override
-  // void initState() {
-  // TODO: implement initState
-  // super.initState();
-  // _verifyPhone();
-  // }
-
-//   void callApi(LoginUser? user) async {
-//     setState(() {
-//       isLoading = false;
-//     });
-
-//     if (user?.status == "true") {
-//       SharedPrefUtils.saveInt(userId, user?.data?.id ?? 0);
-//       SharedPrefUtils.saveStr("userEmail", user?.data?.email ?? "");
-
-//       Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//               builder: (context) => CurrentNoOrder(user!.data!.id.toString())));
-//       // Navigator.push(context,
-//       //     MaterialPageRoute(builder: (context) => NewPassword(widget._email)));
-//     }
-//   }
-
-//   void getFCM() async {
-//     fcm = await SharedPrefUtils.readPrefStr("fcm");
-//     os = Platform.operatingSystem;
-//   }
 }

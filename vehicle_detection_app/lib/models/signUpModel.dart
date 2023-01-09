@@ -1,26 +1,38 @@
-
 class SignUpModel {
   String? uid;
   String? imageUrl;
+  String? name;
   String? email;
   String? password;
   String? confirmPassword;
-  String? phoneNumber;
   String? city;
+  String? phoneNumber;
+  String? description;
 
-  SignUpModel({this.uid, this.imageUrl, this.city, this.email, this.password, this.confirmPassword, this.phoneNumber});
+  SignUpModel({
+    this.uid,
+    this.imageUrl,
+    this.name,
+    this.email,
+    this.password,
+    this.confirmPassword,
+    this.city,
+    this.phoneNumber,
+    this.description,
+  });
 
   // receiving data from server
   factory SignUpModel.fromMap(map) {
     return SignUpModel(
-      uid: map['uid'],
-      imageUrl: map['imageUrl'],
-      email: map['email'],
-      password: map['password'],
-      confirmPassword: map['confirmPassword'],
-      phoneNumber: map['phoneNumber'],
-      city: map['city'],
-    );
+        uid: map['uid'],
+        imageUrl: map['imageUrl'],
+        name: map['name'],
+        email: map['email'],
+        password: map['password'],
+        confirmPassword: map['confirmPassword'],
+        city: map['city'],
+        phoneNumber: map['phoneNumber'],
+        description: map['description']);
   }
 
   // sending data to our server
@@ -28,11 +40,13 @@ class SignUpModel {
     return {
       'uid': uid,
       'imageUrl': imageUrl,
+      'name': name,
       'email': email,
       'password': password,
       'confirmPassword': confirmPassword,
-      'phoneNumber': phoneNumber,
       'city': city,
+      'phoneNumber': phoneNumber,
+      'description': description,
     };
   }
 }

@@ -37,6 +37,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController _cityController = TextEditingController();
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
 
   ImagePicker image = ImagePicker();
 
@@ -54,7 +55,7 @@ class _SignUpState extends State<SignUp> {
               right: 20,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
                     onTap: () {
@@ -63,14 +64,16 @@ class _SignUpState extends State<SignUp> {
                     child: const Icon(Icons.arrow_back_ios,
                         size: 28.0, color: Color.fromARGB(255, 23, 69, 103))),
                 const SizedBox(
-                    // width: 50,
+                  width: 120,
+                ),
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
                     ),
-                const Spacer(),
-                const Text(
-                  "Sign Up",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -113,6 +116,51 @@ class _SignUpState extends State<SignUp> {
                             ? AssetImage("images/uploadImageVector.jpg")
                             : Image.file(file!).image,
                       ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextFormField(
+                          controller: _nameController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                          decoration: InputDecoration(
+                              label: const Text(
+                                "Name",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              hintText: "Enter your name",
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color:
+                                          Color.fromARGB(255, 78, 206, 113))),
+                              border: const OutlineInputBorder(),
+                              prefixIcon: Container(
+                                width: 50,
+                                height: 50,
+                                margin: const EdgeInsets.only(
+                                  top: 11,
+                                  bottom: 11,
+                                  right: 8,
+                                  left: 11,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 78, 206, 113),
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: const Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ))),
                     ),
                     SizedBox(
                       height: 15,
@@ -384,9 +432,9 @@ class _SignUpState extends State<SignUp> {
                             }
 
                             try {
-                              if (_emailController.text.length <= 7) {
+                              if (_emailController.text.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "Email must be greater than 8");
+                                    msg: "Plese enter email address");
                                 return;
                               } else if (_passwordController.text.isEmpty) {
                                 Fluttertoast.showToast(
@@ -396,7 +444,7 @@ class _SignUpState extends State<SignUp> {
                                 Fluttertoast.showToast(
                                     msg: "Password character atleast 8");
                                 return;
-                              } else if (_passwordController ==
+                              } else if (_passwordController.text !=
                                   _confirmPasswordController.text) {
                                 Fluttertoast.showToast(
                                     msg:
@@ -408,13 +456,12 @@ class _SignUpState extends State<SignUp> {
                                 return;
                               } else if (_phoneNumberController.text.isEmpty) {
                                 Fluttertoast.showToast(
-                                    msg: "Please enter your city");
+                                    msg: "Please enter your Phone number");
                                 return;
                               } else if (_phoneNumberController.text.length !=
                                   11) {
                                 Fluttertoast.showToast(
-                                    msg:
-                                        "Please provide a valid email address");
+                                    msg: "Please provide a valid Phone Number");
                                 return;
                               } else {
                                 final ref = FirebaseStorage.instance
@@ -439,12 +486,18 @@ class _SignUpState extends State<SignUp> {
                                 // writing all the values
                                 signUpModel.uid = user!.uid;
                                 signUpModel.imageUrl = imageUrl;
+                                signUpModel.name = _nameController.text;
                                 signUpModel.email = _emailController.text;
                                 signUpModel.password = _passwordController.text;
                                 signUpModel.confirmPassword =
                                     _confirmPasswordController.text;
+                                signUpModel.city = _cityController.text;
                                 signUpModel.phoneNumber =
                                     _phoneNumberController.text;
+                                signUpModel.description =
+                                    _descriptionController.text;
+
+                                print(_nameController.text);
 
                                 await firebaseFirestore
                                     .collection("users")
@@ -468,7 +521,21 @@ class _SignUpState extends State<SignUp> {
                           )),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Login()));
+                      },
+                      child: const Text("Login Here",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 78, 206, 113),
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    SizedBox(
+                      height: 25,
                     ),
                   ],
                 ),

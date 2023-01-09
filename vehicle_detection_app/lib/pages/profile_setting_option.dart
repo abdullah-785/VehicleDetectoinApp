@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
 import 'package:vehicle_detection_app/pages/edit_profile.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
@@ -36,34 +37,43 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                 SizedBox(
                   width: 15,
                 ),
+                // Container(
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(50),
+                //       border: Border.all(
+                //         color: Colors.white,
+                //         width: 5.0,
+                //       ),
+                //       image: DecorationImage(
+                //           image: NetworkImage("${global_imageUrl}")),
+                //       boxShadow: [
+                //         BoxShadow(
+                //             color: Colors.grey.withOpacity(0.1),
+                //             blurRadius: 35,
+                //             spreadRadius: 30,
+                //             offset: const Offset(3, 3))
+                //       ]),
+                //   // child: Padding(
+                //   //   padding: EdgeInsets.all(4.0),
+                //   //   child: Image(image: NetworkImage("${global_imageUrl}")),
+                //   // ),
+                // ),
                 Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 5.0,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              blurRadius: 35,
-                              spreadRadius: 30,
-                              offset: const Offset(3, 3))
-                        ]),
-                    child: const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Image(image: AssetImage("images/logo1.png"),
-                      height: 70,
-                      width: 70,
-                      ),
-                    )),
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: NetworkImage("${global_imageUrl}"),
+                          fit: BoxFit.cover)),
+                ),
                 const SizedBox(
                   width: 20,
                 ),
                 Text(
-                  "Abdullah",
-                  style: TextStyle(
-                    fontSize: 25,
+                  "${global_name}",
+                  style: const TextStyle(
+                    fontSize: 23,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -139,11 +149,10 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         children: [
-
                           Row(
                             children: const [
                               Icon(
-                                Icons.account_box_rounded ,
+                                Icons.account_box_rounded,
                                 color: Color.fromARGB(255, 78, 206, 113),
                                 size: 28,
                               ),
@@ -160,22 +169,21 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                               ),
                             ],
                           ),
-
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(left: 44),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  "Abdullah Butt",
-                                  style: TextStyle(
+                                  "${global_name}",
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
                                 )),
                           ),
-
-                          SizedBox(height: 25,),
-
+                          const SizedBox(
+                            height: 25,
+                          ),
                           Row(
                             children: const [
                               Icon(
@@ -196,13 +204,13 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                               ),
                             ],
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(left: 44),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  "abdbutt2001@gmail.com",
-                                  style: TextStyle(
+                                  "${global_email}",
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
@@ -238,13 +246,13 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                               ),
                             ],
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.only(left: 44),
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  "03317688086",
-                                  style: TextStyle(
+                                  "${global_phoneNumber}",
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
@@ -263,7 +271,7 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                           Row(
                             children: const [
                               Icon(
-                                Icons.description ,
+                                Icons.description,
                                 color: Color.fromARGB(255, 78, 206, 113),
                                 size: 28,
                               ),
@@ -285,8 +293,8 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
                             child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
-                                  style: TextStyle(
+                                  "${global_description}",
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
@@ -322,10 +330,8 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InputVideo()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InputVideo()));
                 },
                 child: const Icon(Icons.add_a_photo)),
             label: 'Add',
@@ -334,7 +340,7 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                  MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',

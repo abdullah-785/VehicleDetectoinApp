@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
-
-
 
 class EditProfile extends StatefulWidget {
   // final LoginUser? user;
@@ -18,11 +22,12 @@ class _EditProfileState extends State<EditProfile> {
   int currentIndex = 0;
   bool isLoading = false;
 
-  // final TextEditingController _firstNme = TextEditingController();
-  // final TextEditingController _lastName = TextEditingController();
-  // final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _driLicinece = TextEditingController();
-  // final TextEditingController _vehNumber = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneNmberController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -44,27 +49,14 @@ class _EditProfileState extends State<EditProfile> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                    width: MediaQuery.of(context).size.width * .26,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 5.0,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              blurRadius: 35,
-                              spreadRadius: 30,
-                              offset: const Offset(3, 3))
-                        ]),
-                    child: const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Image(image: AssetImage("images/logo1.png"),
-                      // height: 85,
-                      // width: 85,
-                      ),
-                    )),
+                  width: 115,
+                  height: 115,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: NetworkImage("${global_imageUrl}"),
+                          fit: BoxFit.cover)),
+                ),
               ],
             ),
           ),
@@ -95,8 +87,7 @@ class _EditProfileState extends State<EditProfile> {
                     const SizedBox(
                       height: 40,
                     ),
-
-                     const Padding(
+                    const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Align(
                         alignment: Alignment.topLeft,
@@ -113,7 +104,7 @@ class _EditProfileState extends State<EditProfile> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
-                          // controller: _emailController,
+                          controller: _nameController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -138,59 +129,7 @@ class _EditProfileState extends State<EditProfile> {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: const Icon(
-                                  Icons.email,
-                                  color: Colors.white,
-                                  size: 25,
-                                ),
-                              ))),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text("Email",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: TextFormField(
-                          // controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: const TextStyle(
-                            fontSize: 20,
-                          ),
-                          decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color:
-                                          Color.fromARGB(255, 78, 206, 113))),
-                              border: const OutlineInputBorder(),
-                              prefixIcon: Container(
-                                width: 39,
-                                height: 39,
-                                margin: const EdgeInsets.only(
-                                  top: 8,
-                                  bottom: 8,
-                                  right: 8,
-                                  left: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 78, 206, 113),
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: const Icon(
-                                  Icons.email,
+                                  Icons.person,
                                   color: Colors.white,
                                   size: 25,
                                 ),
@@ -216,7 +155,7 @@ class _EditProfileState extends State<EditProfile> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
-                          // controller: _driLicinece,
+                          controller: _phoneNmberController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -255,7 +194,7 @@ class _EditProfileState extends State<EditProfile> {
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Text("Description",
+                        child: Text("City",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -268,7 +207,7 @@ class _EditProfileState extends State<EditProfile> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
-                          // controller: _vehNumber,
+                          controller: _cityController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -294,11 +233,52 @@ class _EditProfileState extends State<EditProfile> {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                                 child: const Icon(
-                                  Icons.calendar_view_week_rounded,
+                                  Icons.location_city,
                                   color: Colors.white,
                                   size: 25,
                                 ),
                               ))),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text("Description",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: TextFormField(
+                          controller: _descriptionController,
+                          minLines: 3,
+                          maxLines: 5,
+                          keyboardType: TextInputType.multiline,
+                          style: const TextStyle(
+                            fontSize: 20,
+                          ),
+                          decoration: const InputDecoration(
+                            label: Text(
+                              "Description",
+                              style: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            hintText: "Write something",
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 78, 206, 113))),
+                            border: OutlineInputBorder(),
+                          )),
                     ),
                     const SizedBox(
                       height: 25,
@@ -316,10 +296,56 @@ class _EditProfileState extends State<EditProfile> {
                             height: 50,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color.fromARGB(255, 78, 206, 113),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 78, 206, 113),
                                 ),
-                                onPressed: () {
+                                onPressed: () async {
+                                  // final ref = FirebaseStorage.instance
+                                  //   .ref()
+                                  //   .child("userImage")
+                                  //   .child(DateTime.now().toString());
+                                  // await ref.putFile(file!);
 
+                                  // await _auth.createUserWithEmailAndPassword(
+                                  //   email: _emailController.text
+                                  //       .trim()
+                                  //       .toLowerCase(),
+                                  //   password: _passwordController.text.trim(),
+                                  // );
+
+                                  FirebaseFirestore firebaseFirestore =
+                                      FirebaseFirestore.instance;
+                                  User? user = _auth.currentUser;
+
+                                  SignUpModel signUpModel = SignUpModel();
+
+                                  // writing all the values
+                                  signUpModel.uid = global_uid;
+                                  signUpModel.imageUrl = global_imageUrl;
+                                  signUpModel.name = _nameController.text;
+                                  signUpModel.email = global_email;
+                                  signUpModel.password = global_password;
+                                  signUpModel.confirmPassword =
+                                      global_confirmPassword;
+                                  signUpModel.city = _cityController.text;
+                                  signUpModel.phoneNumber =
+                                      _phoneNmberController.text;
+                                  signUpModel.description =
+                                      _descriptionController.text;
+
+                                  print(_nameController.text);
+
+                                  await firebaseFirestore
+                                      .collection("users")
+                                      .doc(global_uid)
+                                      .set(signUpModel.toMap());
+                                  Fluttertoast.showToast(
+                                      msg: "Updated Successfully ");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Setting()));
                                 },
                                 child: const Text(
                                   "Update",
@@ -350,29 +376,25 @@ class _EditProfileState extends State<EditProfile> {
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Setting() ));
+                      MaterialPageRoute(builder: (context) => const Setting()));
                 },
                 child: const Icon(Icons.settings)),
             label: 'Setting',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InputVideo()));
-              },
-              child: const Icon(Icons.add_a_photo)
-            ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InputVideo()));
+                },
+                child: const Icon(Icons.add_a_photo)),
             label: 'Add',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',
@@ -381,5 +403,4 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-
 }

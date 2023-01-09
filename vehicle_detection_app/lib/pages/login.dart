@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_detection_app/pages/opt_verification.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
@@ -12,6 +14,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +78,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFormField(
+                        controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
                           fontSize: 20,
@@ -114,6 +121,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFormField(
+                        controller: _passwordController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
                           fontSize: 20,
@@ -177,10 +185,37 @@ class _LoginState extends State<Login> {
                           backgroundColor: Color.fromARGB(255, 78, 206, 113),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OptVerification()));
+                          if (_emailController.text.isEmpty &&
+                              _passwordController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Please fill required Fields");
+                            return;
+                          } else if (_emailController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Please provide an email");
+                            return;
+                          } else if (_passwordController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Please provide a password");
+                            return;
+                          } else {
+                            _auth
+                                .signInWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text)
+                                .then((uid) => {
+                                      Fluttertoast.showToast(
+                                          msg: "Login Successfully"),
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OptVerification())),
+                                    })
+                                .catchError((e) {
+                              Fluttertoast.showToast(msg: e!.message);
+                            });
+                          }
                         },
                         child: const Text(
                           "Login",

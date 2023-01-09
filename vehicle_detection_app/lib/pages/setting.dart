@@ -1,5 +1,9 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/admin_login.dart';
 import 'package:vehicle_detection_app/pages/change_password.dart';
 import 'package:vehicle_detection_app/pages/second_home_page.dart';
@@ -22,8 +26,35 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   int currentIndex = 0;
 
+  // User? user = FirebaseAuth.instance.currentUser;
+  // SignUpModel loggedInUser = SignUpModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // FirebaseFirestore.instance
+    //     .collection("users")
+    //     .doc(user!.uid)
+    //     .get()
+    //     .then((value) {
+    //   loggedInUser = SignUpModel.fromMap(value.data());
+    //   setState(() {});
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // global_uid = loggedInUser.uid;
+    // global_imageUrl = loggedInUser.imageUrl;
+    // global_name = loggedInUser.name;
+    // global_email = loggedInUser.email;
+    // global_password = loggedInUser.password;
+    // global_confirmPassword = loggedInUser.confirmPassword;
+    // global_city = loggedInUser.city;
+    // global_phoneNumber = loggedInUser.phoneNumber;
+    // global_description = loggedInUser.description;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 243, 247, 255),
       body: Column(
@@ -103,7 +134,6 @@ class _SettingState extends State<Setting> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-
                     const SizedBox(
                       height: 50,
                     ),
@@ -113,8 +143,8 @@ class _SettingState extends State<Setting> {
                         onTap: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(              
-                                  builder: (context) => SecondHomePage() ));
+                              MaterialPageRoute(
+                                  builder: (context) => SecondHomePage()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -148,8 +178,9 @@ class _SettingState extends State<Setting> {
                         onTap: () {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(              
-                                  builder: (context) => ProfileSettingOption()));
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProfileSettingOption()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -338,7 +369,7 @@ class _SettingState extends State<Setting> {
                           child: Row(
                             children: const [
                               Icon(
-                                Icons.admin_panel_settings ,
+                                Icons.admin_panel_settings,
                                 size: 30,
                                 color: Color.fromARGB(255, 78, 206, 113),
                               ),
@@ -364,7 +395,7 @@ class _SettingState extends State<Setting> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: GestureDetector(
                         onTap: () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                          logout(context);
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -419,22 +450,18 @@ class _SettingState extends State<Setting> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => InputVideo()));
-              },
-              child: const Icon(Icons.add_a_photo)
-            ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InputVideo()));
+                },
+                child: const Icon(Icons.add_a_photo)),
             label: 'Add',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',
@@ -444,4 +471,10 @@ class _SettingState extends State<Setting> {
     );
   }
 
+  // the logout function
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Login()));
+  }
 }

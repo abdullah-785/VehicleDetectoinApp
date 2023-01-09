@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_detection_app/pages/login.dart';
-
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   bool _obscureText = true;
   final TextEditingController _resetEmailController = TextEditingController();
-  // final _auth = FirebaseAuth.instance;
+  final _auth = FirebaseAuth.instance;
 
   // @override
   // void initState() {
@@ -33,7 +34,9 @@ class _ResetPasswordState extends State<ResetPassword> {
           Expanded(
             child: Column(
               children: [
-                SizedBox(height: 85,),
+                SizedBox(
+                  height: 85,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -128,18 +131,21 @@ class _ResetPasswordState extends State<ResetPassword> {
                     height: 50,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: const Color.fromARGB(255, 78, 206, 113),
-                          onPrimary: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 78, 206, 113),
                         ),
                         onPressed: () async {
-                          print(_resetEmailController.text);
-
-                          // forgotPass(_resetEmailController.text);
-                          // //  _auth.sendPasswordResetEmail(email: _resetEmailController.text);
-                          // Fluttertoast.showToast(
-                          //     msg: "Please check your mailbox");
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Login()));
+                          try {
+                            _auth.sendPasswordResetEmail(
+                                email: _resetEmailController.text);
+                            Fluttertoast.showToast(
+                                msg: "Please check your mailbox");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()));
+                          } catch (e) {
+                            Fluttertoast.showToast(msg: e.toString());
+                          }
                         },
                         child: const Text(
                           "Reset",

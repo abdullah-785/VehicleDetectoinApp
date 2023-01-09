@@ -4,6 +4,7 @@ import 'package:vehicle_detection_app/pages/first_home_page.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/login.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
+import 'package:vehicle_detection_app/pages/opt_verification.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/profile_setting_option.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
@@ -19,24 +20,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 //   ));
 // }
 
-
-Future main() async {                                         
-
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp( const MaterialApp(
+  runApp(const MaterialApp(
     // theme: ThemeData(fontFamily: 'Releway'),
     debugShowCheckedModeBanner: false,
     home: MyApp(),
-    
+
     // initialRoute: '/',
     // routes: {
     //   '/': (context) => DetailPage()
     // },
   ));
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
