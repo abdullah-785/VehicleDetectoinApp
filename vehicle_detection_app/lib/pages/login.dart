@@ -33,6 +33,7 @@ class _LoginState extends State<Login> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.width * 0.4,
                       // height: 30,
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -45,7 +46,9 @@ class _LoginState extends State<Login> {
                                 offset: const Offset(3, 3))
                           ]),
                       child: const Image(
-                        image: AssetImage("images/logo1.png"),
+                        image: AssetImage(
+                          "images/logo2.png",
+                        ),
                       ),
                     ),
                   ],
@@ -121,6 +124,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFormField(
+                        obscureText: true,
                         controller: _passwordController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(

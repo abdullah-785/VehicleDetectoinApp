@@ -27,8 +27,8 @@ class _FirstHomePageState extends State<FirstHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    // height: 30,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.width * 0.4,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(100),
@@ -41,7 +41,7 @@ class _FirstHomePageState extends State<FirstHomePage> {
                         ]),
                     child: const Image(
                       image: AssetImage(
-                        "images/logo1.png",
+                        "images/logo2.png",
                       ),
                     ),
                   ),
@@ -127,33 +127,39 @@ class _FirstHomePageState extends State<FirstHomePage> {
                       style: TextStyle(decorationThickness: 20),
                     ),
                   ),
-                  SizedBox(height: 25,),
+                  SizedBox(
+                    height: 25,
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     height: MediaQuery.of(context).size.width * 0.7,
                     child: chartToRun(),
                   ),
-                  SizedBox(height: 60,),
+                  SizedBox(
+                    height: 60,
+                  ),
                 ],
               ),
             ),
           ))
         ],
-        
       ),
       floatingActionButton: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         height: 40,
-        child: FloatingActionButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
-        },
-        child: Text("Login Now", style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        )),
-        backgroundColor: Color.fromARGB(255, 78, 206, 113),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)),
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Login()));
+          },
+          child: Text("Login Now",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              )),
+          backgroundColor: Color.fromARGB(255, 78, 206, 113),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );
@@ -162,34 +168,33 @@ class _FirstHomePageState extends State<FirstHomePage> {
   final List imageUrl = ['images/1.jpg', 'images/2.jpg', 'images/4.jpg'];
 }
 
-
 Widget chartToRun() {
   LabelLayoutStrategy? xContainerLabelLayoutStrategy;
   ChartData chartData;
   ChartOptions chartOptions = const ChartOptions();
 
   chartData = ChartData(
-  dataRows: const [
-  [4.0, 6.0, 5.0, 8.0, 9.0, 11.0],
-  [4.0, 5.0, 7.0, 6.0, 10.0, 13.0],
-  ],
-  xUserLabels: const ['2017','2018','2019', '2020', '2021', '2022'],
-  dataRowsColors: const [
-  Color.fromARGB(255, 78, 206, 113),
-  Color.fromARGB(255, 23, 69, 103)
-  ],
-  dataRowsLegends: const ['Break Rules', 'Accidents'],
-  yUserLabels: const [
-  '500',
-  '1000',
-  '1500',
-  '2000',
-  '2500',
-  '3000',
-  '4000',
-  '4500'
-  ],
-  chartOptions: chartOptions,
+    dataRows: const [
+      [4.0, 6.0, 5.0, 8.0, 9.0, 11.0],
+      [4.0, 5.0, 7.0, 6.0, 10.0, 13.0],
+    ],
+    xUserLabels: const ['2017', '2018', '2019', '2020', '2021', '2022'],
+    dataRowsColors: const [
+      Color.fromARGB(255, 78, 206, 113),
+      Color.fromARGB(255, 23, 69, 103)
+    ],
+    dataRowsLegends: const ['Break Rules', 'Accidents'],
+    yUserLabels: const [
+      '500',
+      '1000',
+      '1500',
+      '2000',
+      '2500',
+      '3000',
+      '4000',
+      '4500'
+    ],
+    chartOptions: chartOptions,
   );
 
   var lineChartContainer = LineChartTopContainer(

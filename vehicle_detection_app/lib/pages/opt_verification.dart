@@ -81,6 +81,7 @@ class _OptVerificationState extends State<OptVerification> {
 
   @override
   Widget build(BuildContext context) {
+    callGlobalVariable();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 243, 247, 255),
       body: Column(
@@ -201,16 +202,6 @@ class _OptVerificationState extends State<OptVerification> {
                         onPressed: () {
                           // verify();
 
-                          global_uid = loggedInUser.uid;
-                          global_imageUrl = loggedInUser.imageUrl;
-                          global_name = loggedInUser.name;
-                          global_email = loggedInUser.email;
-                          global_password = loggedInUser.password;
-                          global_confirmPassword = loggedInUser.confirmPassword;
-                          global_city = loggedInUser.city;
-                          global_phoneNumber = loggedInUser.phoneNumber;
-                          global_description = loggedInUser.description;
-
                           // FirebaseFirestore firebaseFirestore =
                           //           FirebaseFirestore.instance;
                           //       User? user = _auth.currentUser;
@@ -271,4 +262,16 @@ class _OptVerificationState extends State<OptVerification> {
   //     });
   //   }
   // }
+
+  void callGlobalVariable() {
+    global_uid = loggedInUser.uid;
+    global_imageUrl = loggedInUser.imageUrl;
+    global_name = loggedInUser.name;
+    global_email = loggedInUser.email;
+    global_password = loggedInUser.password;
+    global_confirmPassword = loggedInUser.confirmPassword;
+    global_city = loggedInUser.city;
+    global_phoneNumber = loggedInUser.phoneNumber;
+    global_description = loggedInUser.description;
+  }
 }

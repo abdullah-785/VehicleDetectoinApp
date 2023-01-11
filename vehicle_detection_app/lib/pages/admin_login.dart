@@ -36,9 +36,9 @@ class _AdminLoginState extends State<AdminLogin> {
                     },
                     child: const Icon(Icons.arrow_back_ios,
                         size: 28.0, color: Color.fromARGB(255, 23, 69, 103))),
-                 SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.21,
-                    ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.21,
+                ),
                 const Text(
                   "Admin Login",
                   style: TextStyle(
@@ -46,7 +46,6 @@ class _AdminLoginState extends State<AdminLogin> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -227,10 +226,8 @@ class _AdminLoginState extends State<AdminLogin> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InputVideo()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InputVideo()));
                 },
                 child: const Icon(Icons.add_a_photo)),
             label: 'Add',

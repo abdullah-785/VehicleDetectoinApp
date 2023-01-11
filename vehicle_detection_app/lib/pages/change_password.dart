@@ -1,13 +1,17 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
+import 'package:vehicle_detection_app/pages/login.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 
-
 class ChangePassword extends StatefulWidget {
-
   @override
   State<ChangePassword> createState() => _ChangePasswordState();
 }
@@ -16,8 +20,9 @@ class _ChangePasswordState extends State<ChangePassword> {
   TextEditingController _newPasswordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
   // FirebaseAuth _auth = FirebaseAuth.instance;
-  // final currentUser = FirebaseAuth.instance.currentUser;
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   bool oldUser = false;
   bool isLoading = false;
   bool _obscureText = true;
@@ -248,9 +253,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                             height: 50,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color.fromARGB(255, 78, 206, 113),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 78, 206, 113),
                                 ),
                                 onPressed: () async {
+                                  changePassword();
                                   // var pass = _newPasswordController.text;
                                   // var conPass = _confirmPasswordController.text;
                                   // if (pass == conPass) {
@@ -258,7 +265,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   //     isLoading = true;
                                   //   });
                                   // }
-                                  
 
                                   // await changePass(widget._email,
                                   //         _confirmPasswordController.text)
@@ -313,29 +319,25 @@ class _ChangePasswordState extends State<ChangePassword> {
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Setting() ));
+                      MaterialPageRoute(builder: (context) => const Setting()));
                 },
                 child: const Icon(Icons.settings)),
             label: 'Setting',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-               Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InputVideo()));
-              },
-              child: const Icon(Icons.add_a_photo)
-            ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InputVideo()));
+                },
+                child: const Icon(Icons.add_a_photo)),
             label: 'Add',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',
@@ -345,4 +347,44 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
+  void changePassword() async {
+    if (_newPasswordController.text.length < 7) {
+      Fluttertoast.showToast(msg: "Password have atleast 8 character");
+      return;
+    } else if (_confirmPasswordController.text.length < 7) {
+      Fluttertoast.showToast(msg: "Password have atleast 8 character");
+      return;
+    } else if (_newPasswordController.text == _confirmPasswordController.text) {
+      await currentUser!.updatePassword(_newPasswordController.text);
+
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = _auth.currentUser;
+      SignUpModel signUpModel = SignUpModel();
+      // writing all the values
+      signUpModel.uid = user!.uid;
+      signUpModel.imageUrl = global_imageUrl;
+      signUpModel.name = global_name;
+      signUpModel.email = global_email;
+      signUpModel.password = _newPasswordController.text;
+      signUpModel.confirmPassword = _confirmPasswordController.text;
+      signUpModel.city = global_city;
+      signUpModel.phoneNumber = global_phoneNumber;
+      signUpModel.description = global_description;
+
+      await firebaseFirestore
+          .collection("users")
+          .doc(user.uid)
+          .set(signUpModel.toMap());
+      Fluttertoast.showToast(msg: "Passwrod updated successfully");
+      FirebaseAuth.instance.signOut();
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Login()));
+    }
+
+    // try {
+
+    // } catch (e) {
+    //   Fluttertoast.showToast(msg: e.toString());
+    // }
+  }
 }
