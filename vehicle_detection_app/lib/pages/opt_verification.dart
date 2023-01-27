@@ -129,8 +129,8 @@ class _OptVerificationState extends State<OptVerification> {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      textAlign: TextAlign.center,
-                      "Ealaka needs a verify your identity to reset your password, OTP code sent to you through SMS please enter OTP code below and reset password.",
+                      textAlign: TextAlign.justify,
+                      "App needs a verify your identity to reset your password, OTP code sent to you through SMS please enter OTP code below and reset password.",
                       style: TextStyle(
                         fontSize: 16,
                       ),

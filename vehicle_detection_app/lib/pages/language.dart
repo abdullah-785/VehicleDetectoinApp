@@ -5,7 +5,6 @@ import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 
-
 class Language extends StatefulWidget {
   const Language({Key? key}) : super(key: key);
 
@@ -207,7 +206,9 @@ class _LanguageState extends State<Language> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 30,),
+                    SizedBox(
+                      height: 30,
+                    ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: 50,
@@ -257,22 +258,18 @@ class _LanguageState extends State<Language> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => InputVideo()));
-              },
-              child: const Icon(Icons.add_a_photo)
-            ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InputVideo()));
+                },
+                child: const Icon(Icons.add_a_photo)),
             label: 'Add',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',

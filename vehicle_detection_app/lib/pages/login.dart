@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +125,7 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: TextFormField(
-                        obscureText: true,
+                        obscureText: _obscureText,
                         controller: _passwordController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
@@ -134,7 +135,7 @@ class _LoginState extends State<Login> {
                             label: const Text(
                               "Password",
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Colors.grey, 
                               ),
                             ),
                             hintText: "Enter Password",
@@ -156,11 +157,25 @@ class _LoginState extends State<Login> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: const Icon(
-                                Icons.email,
+                                Icons.lock,
                                 color: Colors.white,
                                 size: 30,
                               ),
-                            ))),
+                            ),
+                            suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _obscureText = !_obscureText;
+                              });
+                            },
+                            child: Icon(
+                              _obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: const Color.fromARGB(255, 78, 206, 113),
+                            ),
+                          ),
+                            )),
                   ),
                   const SizedBox(
                     height: 15,
