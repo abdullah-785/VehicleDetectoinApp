@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:vehicle_detection_app/pages/admin_panel.dart';
+import 'package:vehicle_detection_app/pages/AdminPages/admin_opt_verification.dart';
+import 'package:vehicle_detection_app/pages/AdminPages/admin_panel.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
@@ -191,7 +192,7 @@ class _AdminLoginState extends State<AdminLogin> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => AdminPanel()));
+                                    builder: (context) => AdminOptVerification()));
                           },
                           child: const Text(
                             "Login",

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
-import 'package:vehicle_detection_app/pages/admin_login.dart';
+import 'package:vehicle_detection_app/pages/AdminPages/admin_login.dart';
 import 'package:vehicle_detection_app/pages/change_password.dart';
 import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
