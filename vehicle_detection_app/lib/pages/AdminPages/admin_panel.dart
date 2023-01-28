@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 
 import 'package:flutter/material.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_change_password.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
@@ -14,9 +15,21 @@ class AdminPanel extends StatefulWidget {
 }
 
 class _AdminPanelState extends State<AdminPanel> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text("Admin Panel"),
+      // backgroundColor: const Color.fromARGB(255, 243, 247, 255),  
+      // ),
       backgroundColor: const Color.fromARGB(255, 243, 247, 255),
       body: Column(
         children: [
@@ -27,9 +40,16 @@ class _AdminPanelState extends State<AdminPanel> {
               right: 20,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap:() {
+                    // Scaffold.openDrawer();
+                    // Scaffold.of(context).openEndDrawer();
+                  },
+                  child: Icon(Icons.menu)),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.25,),
+                const Text(
                   "Admin Panel",
                   style: TextStyle(
                     fontSize: 24,
@@ -207,76 +227,80 @@ class _AdminPanelState extends State<AdminPanel> {
           ),
         ],
       ),
-      drawer: Drawer(
-        backgroundColor: Color.fromARGB(255, 243, 247, 255),
-        child: Column(
-          children: [
-            Container(
-              color: Color.fromARGB(255, 78, 206, 113),
-              width: double.infinity,
-              height: 200,
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    height: 90,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            "https://pbs.twimg.com/profile_images/685700874434314240/80T5j3HF_400x400.jpg"),
-                      ),
+      drawer: DrawerMethod(context),
+    );
+  }
+
+  Drawer DrawerMethod(BuildContext context) {
+    return Drawer(
+      backgroundColor: Color.fromARGB(255, 243, 247, 255),
+      child: Column(
+        children: [
+          Container(
+            color: Color.fromARGB(255, 78, 206, 113),
+            width: double.infinity,
+            height: 200,
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  height: 90,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          "${admin_global_imageUrl}"),
                     ),
                   ),
-                  Text(
-                    "Abdullah",
-                    style: const TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                Text(
+                  "${admin_global_name}",
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                Text(
+                  "${admin_global_email}",
+                  style: TextStyle(
+                    color: Colors.grey[200],
+                    fontSize: 14,
                   ),
-                  Text(
-                    "abdbutt2001@gmail.com",
-                    style: TextStyle(
-                      color: Colors.grey[200],
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(height: 30,),
-            ListTile(
-              leading: const Icon(
-            Icons.lock,
-            size: 28,
-            color: Color.fromARGB(255, 78, 206, 113),
-              ),
-              title: Text(
-            'Change Password',
-            style: listTextStyle(),
-              ),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AdminChangePassword()));
-              },
+          ),
+          SizedBox(height: 30,),
+          ListTile(
+            leading: const Icon(
+          Icons.lock,
+          size: 28,
+          color: Color.fromARGB(255, 78, 206, 113),
             ),
-            ListTile(
-              leading: const Icon(
-            Icons.switch_access_shortcut,
-            size: 28,
-            color: Color.fromARGB(255, 78, 206, 113),
-              ),
-              title: Text(
-            'Switch to User',
-            style: listTextStyle(),
-              ),
-              onTap: () {
-            // logout(context);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
-              },
+            title: Text(
+          'Change Password',
+          style: listTextStyle(),
             ),
-            
-          ],
-        ),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AdminChangePassword()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+          Icons.switch_access_shortcut,
+          size: 28,
+          color: Color.fromARGB(255, 78, 206, 113),
+            ),
+            title: Text(
+          'Switch to User',
+          style: listTextStyle(),
+            ),
+            onTap: () {
+          // logout(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+            },
+          ),
+          
+        ],
       ),
     );
   }

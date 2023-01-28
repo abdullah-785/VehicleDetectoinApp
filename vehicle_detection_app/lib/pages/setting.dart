@@ -26,34 +26,22 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   int currentIndex = 0;
 
-  // User? user = FirebaseAuth.instance.currentUser;
-  // SignUpModel loggedInUser = SignUpModel();
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // FirebaseFirestore.instance
-    //     .collection("users")
-    //     .doc(user!.uid)
+    //     .collection("admin")
+    //     .doc('ntqabzT1arEobDEDZ3JJ')
     //     .get()
     //     .then((value) {
-    //   loggedInUser = SignUpModel.fromMap(value.data());
-    //   setState(() {});
+    //   adminModel = AdminModel.fromMap(value.data());
     // });
   }
 
   @override
   Widget build(BuildContext context) {
-    // global_uid = loggedInUser.uid;
-    // global_imageUrl = loggedInUser.imageUrl;
-    // global_name = loggedInUser.name;
-    // global_email = loggedInUser.email;
-    // global_password = loggedInUser.password;
-    // global_confirmPassword = loggedInUser.confirmPassword;
-    // global_city = loggedInUser.city;
-    // global_phoneNumber = loggedInUser.phoneNumber;
-    // global_description = loggedInUser.description;
+   
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 243, 247, 255),

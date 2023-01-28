@@ -1,5 +1,9 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
+import 'package:vehicle_detection_app/models/adminModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_opt_verification.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_panel.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
@@ -16,6 +20,23 @@ class AdminLogin extends StatefulWidget {
 
 class _AdminLoginState extends State<AdminLogin> {
   int currentIndex = 0;
+  TextEditingController _emailController = new TextEditingController();
+  TextEditingController _passwrodController = new TextEditingController();
+  AdminModel adminModel = new AdminModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    FirebaseFirestore.instance
+        .collection("admin")
+        .doc('ntqabzT1arEobDEDZ3JJ')
+        .get()
+        .then((value) {
+      adminModel = AdminModel.fromMap(value.data());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +61,8 @@ class _AdminLoginState extends State<AdminLogin> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.21,
                 ),
-                const Text(
-                  "Admin Login",
+                Text(
+                  "Admin Panel",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -75,11 +96,12 @@ class _AdminLoginState extends State<AdminLogin> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      height: MediaQuery.of(context).size.height * 0.15,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -124,6 +146,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
+                          controller: _passwrodController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -189,10 +212,7 @@ class _AdminLoginState extends State<AdminLogin> {
                             backgroundColor: Color.fromARGB(255, 78, 206, 113),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AdminOptVerification()));
+                            adminLogin();
                           },
                           child: const Text(
                             "Login",
@@ -245,5 +265,36 @@ class _AdminLoginState extends State<AdminLogin> {
         ],
       ),
     );
+  }
+
+  void adminLogin() {
+    print(adminModel.email);
+    print(adminModel.password);
+    try {
+      if (_emailController.text.isEmpty && _passwrodController.text.isEmpty) {
+        Fluttertoast.showToast(msg: "Please enter your required fields");
+      } else if (_emailController.text.isEmpty) {
+        Fluttertoast.showToast(msg: "Please an email address");
+      } else if (_passwrodController.text.isEmpty) {
+        Fluttertoast.showToast(msg: "Please enter your password");
+      } else if (_emailController.text != adminModel.email) {
+        Fluttertoast.showToast(msg: "Email is not correct");
+      } else if (_emailController.text != adminModel.email) {
+        Fluttertoast.showToast(msg: "Password is not correct");
+      } else if (_emailController.text == adminModel.email &&
+          _passwrodController.text == adminModel.password) {
+
+          admin_global_uid = adminModel.uid;
+          admin_global_name = adminModel.name;
+          admin_global_password = adminModel.password;
+          admin_global_email = adminModel.email;
+          admin_global_imageUrl = adminModel.imageUrl;
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AdminOptVerification()));
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "$e");
+    }
   }
 }

@@ -18,21 +18,21 @@ class AdminOptVerification extends StatefulWidget {
 }
 
 class _AdminOptVerificationState extends State<AdminOptVerification> {
-  User? user = FirebaseAuth.instance.currentUser;
-  SignUpModel loggedInUser = SignUpModel();
+  // User? user = FirebaseAuth.instance.currentUser;
+  // SignUpModel loggedInUser = SignUpModel();
 
   @override
   void initState() {
     super.initState();
 
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      loggedInUser = SignUpModel.fromMap(value.data());
-      setState(() {});
-    });
+    // FirebaseFirestore.instance
+    //     .collection("users")
+    //     .doc(user!.uid)
+    //     .get()
+    //     .then((value) {
+    //   loggedInUser = SignUpModel.fromMap(value.data());
+    //   setState(() {});
+    // });
 
     // sendOtp();
   }
