@@ -7,3 +7,8 @@ String? global_confirmPassword;
 String? global_city;
 String? global_phoneNumber;
 String? global_description;
+
+
+//user email for otpVerification
+
+String? userEmial;

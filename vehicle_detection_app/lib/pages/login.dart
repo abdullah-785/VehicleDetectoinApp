@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/opt_verification.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
@@ -132,37 +135,37 @@ class _LoginState extends State<Login> {
                           fontSize: 20,
                         ),
                         decoration: InputDecoration(
-                            label: const Text(
-                              "Password",
-                              style: TextStyle(
-                                color: Colors.grey, 
-                              ),
+                          label: const Text(
+                            "Password",
+                            style: TextStyle(
+                              color: Colors.grey,
                             ),
-                            hintText: "Enter Password",
-                            focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 78, 206, 113))),
-                            border: const OutlineInputBorder(),
-                            prefixIcon: Container(
-                              width: 50,
-                              height: 50,
-                              margin: const EdgeInsets.only(
-                                top: 11,
-                                bottom: 11,
-                                right: 8,
-                                left: 11,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 78, 206, 113),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              child: const Icon(
-                                Icons.lock,
-                                color: Colors.white,
-                                size: 30,
-                              ),
+                          ),
+                          hintText: "Enter Password",
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 78, 206, 113))),
+                          border: const OutlineInputBorder(),
+                          prefixIcon: Container(
+                            width: 50,
+                            height: 50,
+                            margin: const EdgeInsets.only(
+                              top: 11,
+                              bottom: 11,
+                              right: 8,
+                              left: 11,
                             ),
-                            suffixIcon: GestureDetector(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 78, 206, 113),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: const Icon(
+                              Icons.lock,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          ),
+                          suffixIcon: GestureDetector(
                             onTap: () {
                               setState(() {
                                 _obscureText = !_obscureText;
@@ -175,7 +178,7 @@ class _LoginState extends State<Login> {
                               color: const Color.fromARGB(255, 78, 206, 113),
                             ),
                           ),
-                            )),
+                        )),
                   ),
                   const SizedBox(
                     height: 15,
@@ -223,13 +226,21 @@ class _LoginState extends State<Login> {
                                     email: _emailController.text,
                                     password: _passwordController.text)
                                 .then((uid) => {
+                                  // Store email for otp in global varibale
+                                  userEmial = _emailController.text,
+                                  // getLoginUserDetails(),
+                                  // callGlobalVariable(),
+
                                       Fluttertoast.showToast(
                                           msg: "Login Successfully"),
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  OptVerification())),
+                                                  OptVerification(
+                                                    userEmail:
+                                                        _emailController.text,
+                                                  ))),
                                     })
                                 .catchError((e) {
                               Fluttertoast.showToast(msg: e!.message);
@@ -264,4 +275,33 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  // void getLoginUserDetails() {
+  //   print("calling getLoginUserDetails");
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   SignUpModel loggedInUser = SignUpModel();
+
+  //   FirebaseFirestore.instance
+  //       .collection("users")
+  //       .doc(user!.uid)
+  //       .get()
+  //       .then((value) {
+  //     loggedInUser = SignUpModel.fromMap(value.data());
+  //     setState(() {});
+  //   });
+  // }
+
+  // void callGlobalVariable() {
+  //   print("calling callGlobalVariables");
+  //   SignUpModel loggedInUser = new SignUpModel();
+  //   global_uid = loggedInUser.uid;
+  //   global_imageUrl = loggedInUser.imageUrl;
+  //   global_name = loggedInUser.name;
+  //   global_email = loggedInUser.email;
+  //   global_password = loggedInUser.password;
+  //   global_confirmPassword = loggedInUser.confirmPassword;
+  //   global_city = loggedInUser.city;
+  //   global_phoneNumber = loggedInUser.phoneNumber;
+  //   global_description = loggedInUser.description;
+  // }
 }

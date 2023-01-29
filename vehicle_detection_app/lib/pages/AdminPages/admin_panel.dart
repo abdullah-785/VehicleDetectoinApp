@@ -1,7 +1,10 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
+import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_change_password.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
@@ -16,10 +19,22 @@ class AdminPanel extends StatefulWidget {
 
 class _AdminPanelState extends State<AdminPanel> {
 
+  // SignUpModel loggedInUser = new SignUpModel();
+  // User? user = FirebaseAuth.instance
+  
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    // FirebaseFirestore.instance
+    //     .collection("users")
+    //     .doc()
+    //     .get()
+    //     .then((value) {
+    //   loggedInUser = SignUpModel.fromMap(value.data());
+    //   setState(() {});
+    // });
   }
 
 
@@ -45,9 +60,9 @@ class _AdminPanelState extends State<AdminPanel> {
                 InkWell(
                   onTap:() {
                     // Scaffold.openDrawer();
-                    // Scaffold.of(context).openEndDrawer();
+                    Scaffold.of(context).openDrawer();
                   },
-                  child: Icon(Icons.menu)),
+                  child: Icon(Icons.menu,)),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.25,),
                 const Text(
                   "Admin Panel",
@@ -142,15 +157,19 @@ class _AdminPanelState extends State<AdminPanel> {
                                                       255, 78, 206, 113),
                                                 ),
                                                 title: Text(
-                                                    "abdbutt2001@gmail.com"),
+                                                    "abdbutt2001@gmail.com",
+                                                    
+                                                    ),
                                               ),
                                               const ListTile(
-                                                leading: Icon(Icons.phone),
+                                                leading: Icon(Icons.phone, color: Color.fromARGB(
+                                                      255, 78, 206, 113),),
                                                 title: Text("03317688086"),
                                               ),
                                               const ListTile(
                                                 leading: Icon(Icons
-                                                    .location_city_rounded),
+                                                    .location_city_rounded, color: Color.fromARGB(
+                                                      255, 78, 206, 113),),
                                                 title: Text("Sialkot"),
                                               ),
                                               Padding(
@@ -182,8 +201,9 @@ class _AdminPanelState extends State<AdminPanel> {
                                                   ),
                                                 ),
                                               ),
+                                              
                                               Padding(
-                                                padding: const EdgeInsets.only(
+                                                padding: const EdgeInsets.only(top: 5,
                                                     bottom: 20),
                                                 child: Center(
                                                     child: InkWell(
@@ -311,3 +331,11 @@ class _AdminPanelState extends State<AdminPanel> {
   color: Colors.grey
   );
 }
+
+
+
+
+
+
+
+

@@ -6,19 +6,30 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
+import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'dart:io' show Platform;
-
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:vehicle_detection_app/pages/sign_up.dart';
+import 'package:email_otp/email_otp.dart';
 
 class OptVerification extends StatefulWidget {
+  final String userEmail;
+   const OptVerification({
+    Key? key, required this.userEmail,
+
+   }) : super(key: key);
+
   @override
   State<OptVerification> createState() => _OptVerificationState();
 }
 
 class _OptVerificationState extends State<OptVerification> {
+  
   User? user = FirebaseAuth.instance.currentUser;
   SignUpModel loggedInUser = SignUpModel();
+  // late EmailAuth emailAuth;
+
+  EmailOTP myOtp = new EmailOTP();
 
   @override
   void initState() {
@@ -32,45 +43,18 @@ class _OptVerificationState extends State<OptVerification> {
       loggedInUser = SignUpModel.fromMap(value.data());
       setState(() {});
     });
+    print(userEmial);
 
-    // sendOtp();
+    sendEmailOtp();
   }
 
-  // late EmailAuth emailAuth;
-  // String em = "abdbutt2001@gmail.com";
-  bool submitValid = false;
+  // bool submitValid = false;
   bool isLoading = false;
   final TextEditingController _optController = TextEditingController();
 
-  // void sendOtp() async {
+  
 
-  // emailAuth = new EmailAuth(
-  //   sessionName: "Ealaka App",
-  // );
-  // bool result = (await emailAuth.sendOtp(recipientMail: em, otpLength: 4));
-
-  // if (result) {
-  //   setState(() {
-  //     submitValid = true;
-  //   });
-  // }
-
-  // print("Successfully send ending");
-  // }
-
-  // void verify() {
-  //   bool result = emailAuth.validateOtp(
-  //       recipientMail: "${em}", userOtp: _optController.text);
-
-  //   if (result == true) {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => Profile()));
-  //     Fluttertoast.showToast(msg: "Login Successfully");
-  //   } else {
-  //     Fluttertoast.showToast(msg: "OPT is not Correct");
-  //     print("Wrong OTP");
-  //   }
-  // }
+  
 
   // setPrefranceData() async {
   //   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -200,25 +184,12 @@ class _OptVerificationState extends State<OptVerification> {
                           backgroundColor: Color.fromARGB(255, 78, 206, 113),
                         ),
                         onPressed: () {
-                          // verify();
+                          verifyOtp();
 
-                          // FirebaseFirestore firebaseFirestore =
-                          //           FirebaseFirestore.instance;
-                          //       User? user = _auth.currentUser;
-
-                          //                 UserModel userModel = UserModel();
-
-                          // if(loggedInUser.oldUser == true){
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context) => const ProgressBar()));
-
-                          // }else if(loggedInUser.oldUser == false){
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context) => const NewPassword()));
-                          // }
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Setting()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => Setting()));
                         },
                         child: const Text(
                           "Submit",
@@ -231,8 +202,7 @@ class _OptVerificationState extends State<OptVerification> {
                   ),
                   InkWell(
                     onTap: () {
-                      // sendOtp();
-                      // bar.show(context);
+                      sendEmailOtp();
                     },
                     child: const Text("Resend OTP",
                         style: TextStyle(
@@ -250,18 +220,30 @@ class _OptVerificationState extends State<OptVerification> {
     );
   }
 
-  // void sendOtp() async {
-  //   emailAuth = new EmailAuth(
-  //     sessionName: "Vehicle Detection App",
-  //   );
-  //   bool result = (await emailAuth.sendOtp(
-  //       recipientMail: "abdbutt2001@gmail.com", otpLength: 4));
-  //   if (result) {
-  //     setState(() {
-  //       submitValid = true;
-  //     });
-  //   }
-  // }
+
+  void sendEmailOtp() async {
+    myOtp.setConfig(
+      appName: "Vehicle Detection App",
+      appEmail: "19101001-038@uskt.edu.pk",
+      userEmail: userEmial,
+      otpLength: 4,
+      otpType: OTPType.digitsOnly
+    );
+
+    if(await myOtp.sendOTP() == true){
+      Fluttertoast.showToast(msg: "OTP send successfully");
+    }
+  }
+
+  void verifyOtp() async {
+    if(await myOtp.verifyOTP(otp: _optController.text) == true){
+      Fluttertoast.showToast(msg: "Successfully");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SecondHomePage()));
+    }else{
+      Fluttertoast.showToast(msg: "Invalid OTP");
+    }
+  }
+
 
   void callGlobalVariable() {
     global_uid = loggedInUser.uid;

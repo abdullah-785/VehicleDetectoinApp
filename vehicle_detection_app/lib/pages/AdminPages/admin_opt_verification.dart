@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_auth/email_auth.dart';
+import 'package:email_otp/email_otp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_panel.dart';
@@ -18,67 +20,20 @@ class AdminOptVerification extends StatefulWidget {
 }
 
 class _AdminOptVerificationState extends State<AdminOptVerification> {
-  // User? user = FirebaseAuth.instance.currentUser;
-  // SignUpModel loggedInUser = SignUpModel();
+  EmailOTP myOtp = new EmailOTP();
 
   @override
   void initState() {
     super.initState();
 
-    // FirebaseFirestore.instance
-    //     .collection("users")
-    //     .doc(user!.uid)
-    //     .get()
-    //     .then((value) {
-    //   loggedInUser = SignUpModel.fromMap(value.data());
-    //   setState(() {});
-    // });
-
-    // sendOtp();
+    sendEmailOtp();
   }
 
-  // late EmailAuth emailAuth;
-  // String em = "abdbutt2001@gmail.com";
   bool submitValid = false;
   bool isLoading = false;
   final TextEditingController _optController = TextEditingController();
 
-  // void sendOtp() async {
 
-  // emailAuth = new EmailAuth(
-  //   sessionName: "Ealaka App",
-  // );
-  // bool result = (await emailAuth.sendOtp(recipientMail: em, otpLength: 4));
-
-  // if (result) {
-  //   setState(() {
-  //     submitValid = true;
-  //   });
-  // }
-
-  // print("Successfully send ending");
-  // }
-
-  // void verify() {
-  //   bool result = emailAuth.validateOtp(
-  //       recipientMail: "${em}", userOtp: _optController.text);
-
-  //   if (result == true) {
-  //     Navigator.push(
-  //         context, MaterialPageRoute(builder: (context) => Profile()));
-  //     Fluttertoast.showToast(msg: "Login Successfully");
-  //   } else {
-  //     Fluttertoast.showToast(msg: "OPT is not Correct");
-  //     print("Wrong OTP");
-  //   }
-  // }
-
-  // setPrefranceData() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   pref.setString("email", "AlreadyLogedIn");
-  // }
-
-  // final bar = SnackBar(content: Text("OTP Send Successfully"));
 
   @override
   Widget build(BuildContext context) {
@@ -203,19 +158,6 @@ class _AdminOptVerificationState extends State<AdminOptVerification> {
                         onPressed: () {
                           // verify();
 
-                          // FirebaseFirestore firebaseFirestore =
-                          //           FirebaseFirestore.instance;
-                          //       User? user = _auth.currentUser;
-
-                          //                 UserModel userModel = UserModel();
-
-                          // if(loggedInUser.oldUser == true){
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context) => const ProgressBar()));
-
-                          // }else if(loggedInUser.oldUser == false){
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context) => const NewPassword()));
-                          // }
-
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -250,29 +192,26 @@ class _AdminOptVerificationState extends State<AdminOptVerification> {
       ),
     );
   }
+void sendEmailOtp() async {
+    myOtp.setConfig(
+      appName: "Vehicle Detection App",
+      appEmail: "19101001-038@uskt.edu.pk",
+      userEmail: adminEmailForOtp,
+      otpLength: 4,
+      otpType: OTPType.digitsOnly
+    );
 
-  // void sendOtp() async {
-  //   emailAuth = new EmailAuth(
-  //     sessionName: "Vehicle Detection App",
-  //   );
-  //   bool result = (await emailAuth.sendOtp(
-  //       recipientMail: "abdbutt2001@gmail.com", otpLength: 4));
-  //   if (result) {
-  //     setState(() {
-  //       submitValid = true;
-  //     });
-  //   }
-  // }
+    if(await myOtp.sendOTP() == true){
+      Fluttertoast.showToast(msg: "OTP send successfully");
+    }
+  }
 
-  // void callGlobalVariable() {
-  //   global_uid = loggedInUser.uid;
-  //   global_imageUrl = loggedInUser.imageUrl;
-  //   global_name = loggedInUser.name;
-  //   global_email = loggedInUser.email;
-  //   global_password = loggedInUser.password;
-  //   global_confirmPassword = loggedInUser.confirmPassword;
-  //   global_city = loggedInUser.city;
-  //   global_phoneNumber = loggedInUser.phoneNumber;
-  //   global_description = loggedInUser.description;
-  // }
+  void verifyOtp() async {
+    if(await myOtp.verifyOTP(otp: _optController.text) == true){
+      Fluttertoast.showToast(msg: "Successfully");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPanel()));
+    }else{
+      Fluttertoast.showToast(msg: "Invalid OTP");
+    }
+  }
 }

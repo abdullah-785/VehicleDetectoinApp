@@ -289,7 +289,8 @@ class _AdminLoginState extends State<AdminLogin> {
           admin_global_password = adminModel.password;
           admin_global_email = adminModel.email;
           admin_global_imageUrl = adminModel.imageUrl;
-
+          
+          adminEmailForOtp = _emailController.text;
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AdminOptVerification()));
       }
