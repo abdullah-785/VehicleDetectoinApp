@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_charts/flutter_charts.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:vehicle_detection_app/pages/login.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
@@ -41,7 +42,7 @@ class _FirstHomePageState extends State<FirstHomePage> {
                         ]),
                     child: const Image(
                       image: AssetImage(
-                        "images/logo2.png",
+                        "images/logo1.png",
                       ),
                     ),
                   ),
@@ -123,7 +124,7 @@ class _FirstHomePageState extends State<FirstHomePage> {
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       textAlign: TextAlign.justify,
-                      "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                      "Deep learning is a potential solution for object detection and scene perception problems which can enable algorithm-driven and data-drive cars. Automatic recognition of vehicles has been widely used in vehicle information systems and intelligent traffic systems. Analyzing and interpreting a large amount of data. Traffic management is too difficult and the traffic hazards increase at a high rate. Our system detects, classifies, and counts the moving vehicles from video. The effective solutions to the problem of urban traffic congestion, and it is also one of the important topics of smart city construction. The traffic police can not monitored multiple rules violation at the same time. That is why we will implement this system to help out the police departments.",
                       style: TextStyle(decorationThickness: 20),
                     ),
                   ),

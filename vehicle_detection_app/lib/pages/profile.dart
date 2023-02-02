@@ -50,15 +50,20 @@ class _ProfileState extends State<Profile> {
               const SizedBox(
                 width: 12,
               ),
-              Container(
-                width: 90,
-                height: 90,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: NetworkImage("${global_imageUrl}"),
-                        fit: BoxFit.cover)),
-              ),
+              CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 45,
+                  backgroundImage: NetworkImage("${global_imageUrl}"),
+                ),
+              // Container(
+              //   width: 90,
+              //   height: 90,
+              //   decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       image: DecorationImage(
+              //           image: NetworkImage("${global_imageUrl}"),
+              //           fit: BoxFit.cover)),
+              // ),
               const SizedBox(width: 35),
               Column(
                 children: const [
@@ -161,12 +166,11 @@ class _ProfileState extends State<Profile> {
             height: 20,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
+            width: MediaQuery.of(context).size.width * 0.95,
             // height: 30,
             child: ElevatedButton(
+              
                 style: ElevatedButton.styleFrom(
-                  // primary: const Color.fromARGB(255, 78, 206, 113),
-                  // onPrimary: Colors.white,
                   backgroundColor: Color.fromARGB(255, 78, 206, 113),
                 ),
                 onPressed: () {

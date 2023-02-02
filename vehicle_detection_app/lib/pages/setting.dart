@@ -2,9 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_login.dart';
+import 'package:vehicle_detection_app/pages/PolicePages/police_login.dart';
 import 'package:vehicle_detection_app/pages/change_password.dart';
 import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
@@ -15,6 +17,7 @@ import 'package:vehicle_detection_app/pages/privcy_policy.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/profile_setting_option.dart';
 import 'package:vehicle_detection_app/pages/term_and_condition.dart';
+import 'package:vehicle_detection_app/widgets/bottom_nav_bar.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -30,19 +33,10 @@ class _SettingState extends State<Setting> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // FirebaseFirestore.instance
-    //     .collection("admin")
-    //     .doc('ntqabzT1arEobDEDZ3JJ')
-    //     .get()
-    //     .then((value) {
-    //   adminModel = AdminModel.fromMap(value.data());
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-   
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 243, 247, 255),
       body: Column(
@@ -379,6 +373,37 @@ class _SettingState extends State<Setting> {
                     const SizedBox(
                       height: 8,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: GestureDetector(
+                        onTap: () async {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => PoliceLogin()));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 32),
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.local_police_rounded,
+                                size: 30,
+                                color: Color.fromARGB(255, 78, 206, 113),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                "Switch to Police",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8,),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: GestureDetector(

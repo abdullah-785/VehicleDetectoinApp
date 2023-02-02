@@ -43,19 +43,27 @@ dependencies:
   flutter_charts: ^0.5.0
   file_picker: ^5.2.4
   image_picker: ^0.8.6
-  intl_phone_number_input: ^0.7.1
   flutter_fadein: ^2.0.0
   firebase_core: ^2.4.1
   firebase_storage: ^11.0.10
   firebase_auth: ^4.2.4
   cloud_firestore: ^4.3.1
-  email_auth: ^1.0.0
-  auth: ^8.0.0
   email_otp: ^1.0.4
+  firebase_database: ^10.0.9
+  persistent_bottom_nav_bar:
+ 
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  image_path: "images/logo.png"
+  android: true
+  ios: true
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

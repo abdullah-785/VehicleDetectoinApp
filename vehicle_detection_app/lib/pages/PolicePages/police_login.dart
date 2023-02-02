@@ -11,17 +11,16 @@ import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 
-class AdminLogin extends StatefulWidget {
-  const AdminLogin({Key? key}) : super(key: key);
+class PoliceLogin extends StatefulWidget {
+  const PoliceLogin({Key? key}) : super(key: key);
 
   @override
-  State<AdminLogin> createState() => _AdminLoginState();
+  State<PoliceLogin> createState() => _PoliceLoginState();
 }
 
-class _AdminLoginState extends State<AdminLogin> {
+class _PoliceLoginState extends State<PoliceLogin> {
   int currentIndex = 0;
-  bool isLoading = false; 
-  bool _obscureText = true;
+  bool isLoading = false;
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwrodController = new TextEditingController();
   AdminModel adminModel = new AdminModel();
@@ -149,7 +148,6 @@ class _AdminLoginState extends State<AdminLogin> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: TextFormField(
                           controller: _passwrodController,
-                          obscureText: _obscureText,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
                             fontSize: 20,
@@ -186,21 +184,7 @@ class _AdminLoginState extends State<AdminLogin> {
                                   color: Colors.white,
                                   size: 30,
                                 ),
-                              ),
-                              suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                            child: Icon(
-                              _obscureText
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: const Color.fromARGB(255, 78, 206, 113),
-                            ),
-                          ),
-                              )),
+                              ))),
                     ),
                     const SizedBox(
                       height: 15,
@@ -229,7 +213,7 @@ class _AdminLoginState extends State<AdminLogin> {
                             backgroundColor: Color.fromARGB(255, 78, 206, 113),
                           ),
                           onPressed: () {
-                            adminLogin();
+                            // policeLogin();
                           },
                           child: (isLoading)? CircularProgressIndicator(
                             color: Colors.white,
@@ -286,7 +270,7 @@ class _AdminLoginState extends State<AdminLogin> {
     );
   }
 
-  void adminLogin() {
+  void policeLogin() {
     
     try {
       setState(() {

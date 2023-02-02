@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_auth/email_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -52,10 +51,6 @@ class _OptVerificationState extends State<OptVerification> {
   bool isLoading = false;
   final TextEditingController _optController = TextEditingController();
 
-  
-
-  
-
   // setPrefranceData() async {
   //   SharedPreferences pref = await SharedPreferences.getInstance();
   //   pref.setString("email", "AlreadyLogedIn");
@@ -91,15 +86,7 @@ class _OptVerificationState extends State<OptVerification> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  (isLoading)
-                      ? const SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: Colors.green,
-                            strokeWidth: 2,
-                          ))
-                      : const SizedBox(
+                  const SizedBox(
                           height: 10,
                         ),
                   // Text("${loggedInUser.phoneNumber}"),
@@ -186,12 +173,10 @@ class _OptVerificationState extends State<OptVerification> {
                         onPressed: () {
                           verifyOtp();
 
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => Setting()));
                         },
-                        child: const Text(
+                        child: (isLoading)? const CircularProgressIndicator(
+                          color: Colors.white,
+                        ) : const Text(
                           "Submit",
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
@@ -236,11 +221,21 @@ class _OptVerificationState extends State<OptVerification> {
   }
 
   void verifyOtp() async {
+    setState(() {
+      isLoading = true;
+    });
+
     if(await myOtp.verifyOTP(otp: _optController.text) == true){
       Fluttertoast.showToast(msg: "Successfully");
+      setState(() {
+      isLoading = false;
+    });
       Navigator.push(context, MaterialPageRoute(builder: (context) => SecondHomePage()));
     }else{
       Fluttertoast.showToast(msg: "Invalid OTP");
+      setState(() {
+      isLoading = false;
+    });
     }
   }
 

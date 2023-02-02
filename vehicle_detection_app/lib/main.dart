@@ -12,6 +12,8 @@ import 'package:vehicle_detection_app/pages/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:vehicle_detection_app/pages/splash_screen.dart';
+import 'package:vehicle_detection_app/widgets/bottom_nav_bar.dart';
 
 // void main() {
 //   runApp(const MaterialApp(

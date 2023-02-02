@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
@@ -9,6 +8,7 @@ import 'package:vehicle_detection_app/pages/AdminPages/admin_change_password.dar
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:vehicle_detection_app/pages/user_detail_on_admin_panel.dart';
+
 
 class AdminPanel extends StatefulWidget {
   const AdminPanel({super.key});
@@ -21,6 +21,8 @@ class _AdminPanelState extends State<AdminPanel> {
 
   // SignUpModel loggedInUser = new SignUpModel();
   // User? user = FirebaseAuth.instance
+  // DatabaseReference
+  final _db = FirebaseFirestore.instance;
   
 
   @override
@@ -330,6 +332,14 @@ class _AdminPanelState extends State<AdminPanel> {
   fontWeight: FontWeight.bold,
   color: Colors.grey
   );
+
+
+  // Future<List<SignUpModel>> allUsers() async{
+  //   final snapshot = _db.collection("users").get("email");
+  //   // final userData = SignUpModel.fromSnapshot(e).toList();
+  //   final userData = snapshot.docs!.map((e) => SignUpModel.fromSnapshot(e)).toList();
+  //   return userData;
+  // }
 }
 
 

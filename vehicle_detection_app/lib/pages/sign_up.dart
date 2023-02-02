@@ -8,7 +8,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/login.dart';
@@ -28,6 +27,7 @@ class _SignUpState extends State<SignUp> {
   int currentIndex = 0;
   File? file;
   String? imageUrl;
+  bool isLoading = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -113,11 +113,11 @@ class _SignUpState extends State<SignUp> {
                       child: CircleAvatar(
                         radius: 70,
                         backgroundImage: file == null
-                            ? AssetImage("images/uploadImageVector.jpg")
+                            ? const AssetImage("images/uploadImageVector.jpg")
                             : Image.file(file!).image,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Padding(
@@ -162,7 +162,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                               ))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Padding(
@@ -360,7 +360,7 @@ class _SignUpState extends State<SignUp> {
                                   color: Colors.grey,
                                 ),
                               ),
-                              hintText: "Enter your Number",
+                              hintText: "03317688086",
                               focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color:
@@ -414,7 +414,7 @@ class _SignUpState extends State<SignUp> {
                             border: OutlineInputBorder(),
                           )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     SizedBox(
@@ -432,36 +432,60 @@ class _SignUpState extends State<SignUp> {
                             }
 
                             try {
+                              setState(() {
+                                isLoading = true;
+                              });
                               if (_emailController.text.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Plese enter email address");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else if (_passwordController.text.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Please provide password");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else if (_passwordController.text.length < 7) {
                                 Fluttertoast.showToast(
                                     msg: "Password character atleast 8");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else if (_passwordController.text !=
                                   _confirmPasswordController.text) {
                                 Fluttertoast.showToast(
                                     msg:
                                         "Password and confirm password are not same");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else if (_cityController.text.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Please enter your city");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else if (_phoneNumberController.text.isEmpty) {
                                 Fluttertoast.showToast(
                                     msg: "Please enter your Phone number");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else if (_phoneNumberController.text.length !=
                                   11) {
                                 Fluttertoast.showToast(
                                     msg: "Please provide a valid Phone Number");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               } else {
                                 final ref = FirebaseStorage.instance
@@ -505,6 +529,9 @@ class _SignUpState extends State<SignUp> {
                                     .set(signUpModel.toMap());
                                 Fluttertoast.showToast(
                                     msg: "Account created successfully :) ");
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -512,21 +539,29 @@ class _SignUpState extends State<SignUp> {
                               }
                             } catch (e) {
                               Fluttertoast.showToast(msg: "${e}");
+                              setState(() {
+                                isLoading = false;
+                              });
                             }
                           },
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          )),
+                          child: (isLoading)
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()));
+                            MaterialPageRoute(builder: (context) => const Login()));
                       },
                       child: const Text("Login Here",
                           style: TextStyle(
@@ -534,7 +569,7 @@ class _SignUpState extends State<SignUp> {
                               color: Color.fromARGB(255, 78, 206, 113),
                               fontWeight: FontWeight.bold)),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
                   ],

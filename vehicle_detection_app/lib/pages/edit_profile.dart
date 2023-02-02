@@ -48,14 +48,9 @@ class _EditProfileState extends State<EditProfile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 115,
-                  height: 115,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage("${global_imageUrl}"),
-                          fit: BoxFit.cover)),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: NetworkImage("${global_imageUrl}"),
                 ),
               ],
             ),
@@ -299,53 +294,8 @@ class _EditProfileState extends State<EditProfile> {
                                   backgroundColor:
                                       Color.fromARGB(255, 78, 206, 113),
                                 ),
-                                onPressed: () async {
-                                  // final ref = FirebaseStorage.instance
-                                  //   .ref()
-                                  //   .child("userImage")
-                                  //   .child(DateTime.now().toString());
-                                  // await ref.putFile(file!);
-
-                                  // await _auth.createUserWithEmailAndPassword(
-                                  //   email: _emailController.text
-                                  //       .trim()
-                                  //       .toLowerCase(),
-                                  //   password: _passwordController.text.trim(),
-                                  // );
-
-                                  FirebaseFirestore firebaseFirestore =
-                                      FirebaseFirestore.instance;
-                                  User? user = _auth.currentUser;
-
-                                  SignUpModel signUpModel = SignUpModel();
-
-                                  // writing all the values
-                                  signUpModel.uid = global_uid;
-                                  signUpModel.imageUrl = global_imageUrl;
-                                  signUpModel.name = _nameController.text;
-                                  signUpModel.email = global_email;
-                                  signUpModel.password = global_password;
-                                  signUpModel.confirmPassword =
-                                      global_confirmPassword;
-                                  signUpModel.city = _cityController.text;
-                                  signUpModel.phoneNumber =
-                                      _phoneNmberController.text;
-                                  signUpModel.description =
-                                      _descriptionController.text;
-
-                                  print(_nameController.text);
-
-                                  await firebaseFirestore
-                                      .collection("users")
-                                      .doc(global_uid)
-                                      .set(signUpModel.toMap());
-                                  Fluttertoast.showToast(
-                                      msg: "Updated Successfully ");
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Setting()));
+                                onPressed: () {
+                                  updatingData();
                                 },
                                 child: const Text(
                                   "Update",
@@ -402,5 +352,57 @@ class _EditProfileState extends State<EditProfile> {
         ],
       ),
     );
+  }
+
+  void updatingData() async {
+    setState(() {
+      isLoading = true;
+    });
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    SignUpModel signUpModel = SignUpModel();
+
+    if (_nameController.text.isNotEmpty &&
+        _phoneNmberController.text.isNotEmpty &&
+        _cityController.text.isNotEmpty &&
+        _descriptionController.text.isNotEmpty) {
+      signUpModel.uid = global_uid;
+      signUpModel.imageUrl = global_imageUrl;
+      signUpModel.name = _nameController.text;
+      signUpModel.email = global_email;
+      signUpModel.password = global_password;
+      signUpModel.confirmPassword = global_confirmPassword;
+      signUpModel.city = _cityController.text;
+      signUpModel.phoneNumber = _phoneNmberController.text;
+      signUpModel.description = _descriptionController.text;
+
+      //Set golbal Varibale
+      global_name = _nameController.text;
+      global_city = _cityController.text;
+      global_phoneNumber = _phoneNmberController.text;
+      global_description = _descriptionController.text;
+
+
+      print(_nameController.text);
+
+      await firebaseFirestore
+          .collection("users")
+          .doc(global_uid)
+          .set(signUpModel.toMap());
+      Fluttertoast.showToast(msg: "Updated Successfully ");
+      setState(() {
+        isLoading = false;
+      });
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Setting()));
+    }else{
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "Please enter your requied fields");
+    }
+
+    // writing all the values
   }
 }

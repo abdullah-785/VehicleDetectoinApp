@@ -12,6 +12,7 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
   bool _obscureText = true;
+  bool isLoading = false;
   final TextEditingController _resetEmailController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
@@ -134,20 +135,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                           backgroundColor: Color.fromARGB(255, 78, 206, 113),
                         ),
                         onPressed: () async {
-                          try {
-                            _auth.sendPasswordResetEmail(
-                                email: _resetEmailController.text);
-                            Fluttertoast.showToast(
-                                msg: "Please check your mailbox");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Login()));
-                          } catch (e) {
-                            Fluttertoast.showToast(msg: e.toString());
-                          }
+                          resetEmail();
                         },
-                        child: const Text(
+                        child: (isLoading)? const CircularProgressIndicator(
+                          color: Colors.white,
+                        ) : const Text(
                           "Reset",
                           style: TextStyle(
                               fontSize: 22, fontWeight: FontWeight.bold),
@@ -160,5 +152,27 @@ class _ResetPasswordState extends State<ResetPassword> {
         ],
       ),
     );
+  }
+
+  void resetEmail() {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      if (_resetEmailController.text.isNotEmpty) {
+        _auth.sendPasswordResetEmail(email: _resetEmailController.text);
+        Fluttertoast.showToast(msg: "Please check your mailbox");
+        setState(() {
+        isLoading = false;
+      });
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Login()));
+      }
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: e.toString());
+    }
   }
 }

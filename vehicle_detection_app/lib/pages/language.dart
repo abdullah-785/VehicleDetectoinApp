@@ -151,7 +151,7 @@ class _LanguageState extends State<Language> {
                             width: 20,
                           ),
                           const Text(
-                            "Arabic",
+                            "Urdu",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -187,7 +187,7 @@ class _LanguageState extends State<Language> {
                             width: 20,
                           ),
                           const Text(
-                            "Kurdish",
+                            "Arabic",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

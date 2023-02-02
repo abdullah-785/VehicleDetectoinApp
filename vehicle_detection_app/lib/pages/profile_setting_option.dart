@@ -34,38 +34,14 @@ class _ProfileSettingOptionState extends State<ProfileSettingOption> {
             ),
             child: Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(50),
-                //       border: Border.all(
-                //         color: Colors.white,
-                //         width: 5.0,
-                //       ),
-                //       image: DecorationImage(
-                //           image: NetworkImage("${global_imageUrl}")),
-                //       boxShadow: [
-                //         BoxShadow(
-                //             color: Colors.grey.withOpacity(0.1),
-                //             blurRadius: 35,
-                //             spreadRadius: 30,
-                //             offset: const Offset(3, 3))
-                //       ]),
-                //   // child: Padding(
-                //   //   padding: EdgeInsets.all(4.0),
-                //   //   child: Image(image: NetworkImage("${global_imageUrl}")),
-                //   // ),
-                // ),
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage("${global_imageUrl}"),
-                          fit: BoxFit.cover)),
+
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 45,
+                  backgroundImage: NetworkImage("${global_imageUrl}"),
                 ),
                 const SizedBox(
                   width: 20,

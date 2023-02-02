@@ -21,6 +21,7 @@ class _LoginState extends State<Login> {
   TextEditingController _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool _obscureText = true;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _LoginState extends State<Login> {
                           ]),
                       child: const Image(
                         image: AssetImage(
-                          "images/logo2.png",
+                          "images/logo1.png",
                         ),
                       ),
                     ),
@@ -207,51 +208,19 @@ class _LoginState extends State<Login> {
                           backgroundColor: Color.fromARGB(255, 78, 206, 113),
                         ),
                         onPressed: () {
-                          if (_emailController.text.isEmpty &&
-                              _passwordController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                msg: "Please fill required Fields");
-                            return;
-                          } else if (_emailController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                msg: "Please provide an email");
-                            return;
-                          } else if (_passwordController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                msg: "Please provide a password");
-                            return;
-                          } else {
-                            _auth
-                                .signInWithEmailAndPassword(
-                                    email: _emailController.text,
-                                    password: _passwordController.text)
-                                .then((uid) => {
-                                  // Store email for otp in global varibale
-                                  userEmial = _emailController.text,
-                                  // getLoginUserDetails(),
-                                  // callGlobalVariable(),
-
-                                      Fluttertoast.showToast(
-                                          msg: "Login Successfully"),
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OptVerification(
-                                                    userEmail:
-                                                        _emailController.text,
-                                                  ))),
-                                    })
-                                .catchError((e) {
-                              Fluttertoast.showToast(msg: e!.message);
-                            });
-                          }
+                          userLogin();
                         },
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        )),
+                        child: (isLoading)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 4.0,
+                                
+                              )
+                            : const Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              )),
                   ),
                   SizedBox(
                     height: 5,
@@ -276,32 +245,55 @@ class _LoginState extends State<Login> {
     );
   }
 
-  // void getLoginUserDetails() {
-  //   print("calling getLoginUserDetails");
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   SignUpModel loggedInUser = SignUpModel();
+  //Login User Function
+  void userLogin() {
+    setState(() {
+      isLoading = true;
+    });
 
-  //   FirebaseFirestore.instance
-  //       .collection("users")
-  //       .doc(user!.uid)
-  //       .get()
-  //       .then((value) {
-  //     loggedInUser = SignUpModel.fromMap(value.data());
-  //     setState(() {});
-  //   });
-  // }
+    if (_emailController.text.isEmpty && _passwordController.text.isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "Please fill required Fields");
+      return;
+    } else if (_emailController.text.isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "Please provide an email");
+      return;
+    } else if (_passwordController.text.isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "Please provide a password");
+      return;
+    } else {
+      _auth
+          .signInWithEmailAndPassword(
+              email: _emailController.text, password: _passwordController.text)
+          .then((uid) => {
+                // Store email for otp in global varibale
+                userEmial = _emailController.text,
+                Fluttertoast.showToast(msg: "Login Successfully"),
 
-  // void callGlobalVariable() {
-  //   print("calling callGlobalVariables");
-  //   SignUpModel loggedInUser = new SignUpModel();
-  //   global_uid = loggedInUser.uid;
-  //   global_imageUrl = loggedInUser.imageUrl;
-  //   global_name = loggedInUser.name;
-  //   global_email = loggedInUser.email;
-  //   global_password = loggedInUser.password;
-  //   global_confirmPassword = loggedInUser.confirmPassword;
-  //   global_city = loggedInUser.city;
-  //   global_phoneNumber = loggedInUser.phoneNumber;
-  //   global_description = loggedInUser.description;
-  // }
+                setState(() {
+                  isLoading = false;
+                }),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => OptVerification(
+                              userEmail: _emailController.text,
+                            ))),
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+        setState(() {
+          isLoading = false;
+        });
+      });
+    }
+  }
 }

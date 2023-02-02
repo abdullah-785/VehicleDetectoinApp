@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class SignUpModel {
   String? uid;
   String? imageUrl;
@@ -49,4 +51,29 @@ class SignUpModel {
       'description': description,
     };
   }
+
+
+  toJson(){
+    return {"uid": uid, "imageUrl": imageUrl, "name": name, "email": email, "password": password, "confirmPassword": confirmPassword, "city": city, "phoneNumber": phoneNumber, "description": description};
+  }
+
+
+  // For fetching complete list of users
+  factory SignUpModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document){
+    final data = document.data()!;
+
+    return SignUpModel(
+        
+        uid: document.id,
+        imageUrl: data['imageUrl'],
+        name: data['name'],
+        email: data['email'],
+        password: data['password'],
+        confirmPassword: data['confirmPassword'],
+        city: data['city'],
+        phoneNumber: data['phoneNumber'],
+        description: data['description']);
+  }
+
+
 }

@@ -133,6 +133,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fontSize: 20,
                         ),
                         decoration: InputDecoration(
+                          
                           focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 78, 206, 113))),
@@ -198,6 +199,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fontSize: 20,
                         ),
                         decoration: InputDecoration(
+                          
                           focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 78, 206, 113))),
@@ -240,15 +242,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                     const SizedBox(
                       height: 28,
                     ),
-                    (isLoading)
-                        ? const SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              color: Colors.green,
-                              strokeWidth: 2,
-                            ))
-                        : SizedBox(
+                    SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
                             height: 50,
                             child: ElevatedButton(
@@ -258,42 +252,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 ),
                                 onPressed: () async {
                                   changePassword();
-                                  // var pass = _newPasswordController.text;
-                                  // var conPass = _confirmPasswordController.text;
-                                  // if (pass == conPass) {
-                                  //   setState(() {
-                                  //     isLoading = true;
-                                  //   });
-                                  // }
-
-                                  // await changePass(widget._email,
-                                  //         _confirmPasswordController.text)
-                                  //     .then((value) => {
-                                  //           if (value!.status == "true")
-                                  //             {
-                                  //               // Fluttertoast.showToast(
-                                  //               ///   msg: "Password Updated Successfully")
-
-                                  //               Navigator.push(
-                                  //                   context,
-                                  //                   MaterialPageRoute(
-                                  //                       builder: (context) =>
-                                  //                           const ProgressBar()))
-                                  //             }
-                                  //         });
-
-                                  // if (resp!.status == "true") {
-                                  //   Fluttertoast.showToast(
-                                  //       msg: "Password Updated Successfully");
-
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               const ProgressBar()));
-                                  // }
+                                  
                                 },
-                                child: const Text(
+                                child: (isLoading)? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                ) : const Text(
                                   "Submit",
                                   style: TextStyle(
                                       fontSize: 22,

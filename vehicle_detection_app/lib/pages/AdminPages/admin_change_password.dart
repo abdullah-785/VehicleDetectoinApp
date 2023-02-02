@@ -58,28 +58,28 @@ class _AdminChangePasswordState extends State<AdminChangePassword> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Spacer(),
-                Badge(
-                    badgeColor: const Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
-                    badgeContent: const Padding(
-                      padding: EdgeInsets.all(1.0),
-                      child: Text(
-                        "2",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const NotificationPage()));
-                      },
-                      child: const Icon(Icons.notifications,
-                          size: 30, color: Color.fromARGB(255, 23, 69, 103)),
-                    )),
+                // const Spacer(),
+                // Badge(
+                //     badgeColor: const Color.fromARGB(255, 78, 206, 113),
+                //     animationType: BadgeAnimationType.slide,
+                //     badgeContent: const Padding(
+                //       padding: EdgeInsets.all(1.0),
+                //       child: Text(
+                //         "2",
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //     ),
+                //     child: GestureDetector(
+                //       onTap: () {
+                //         Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) =>
+                //                     const NotificationPage()));
+                //       },
+                //       child: const Icon(Icons.notifications,
+                //           size: 30, color: Color.fromARGB(255, 23, 69, 103)),
+                //     )),
               ],
             ),
           ),
@@ -257,41 +257,8 @@ class _AdminChangePasswordState extends State<AdminChangePassword> {
                                       Color.fromARGB(255, 78, 206, 113),
                                 ),
                                 onPressed: () async {
-                                  changePassword();
-                                  // var pass = _newPasswordController.text;
-                                  // var conPass = _confirmPasswordController.text;
-                                  // if (pass == conPass) {
-                                  //   setState(() {
-                                  //     isLoading = true;
-                                  //   });
-                                  // }
-
-                                  // await changePass(widget._email,
-                                  //         _confirmPasswordController.text)
-                                  //     .then((value) => {
-                                  //           if (value!.status == "true")
-                                  //             {
-                                  //               // Fluttertoast.showToast(
-                                  //               ///   msg: "Password Updated Successfully")
-
-                                  //               Navigator.push(
-                                  //                   context,
-                                  //                   MaterialPageRoute(
-                                  //                       builder: (context) =>
-                                  //                           const ProgressBar()))
-                                  //             }
-                                  //         });
-
-                                  // if (resp!.status == "true") {
-                                  //   Fluttertoast.showToast(
-                                  //       msg: "Password Updated Successfully");
-
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) =>
-                                  //               const ProgressBar()));
-                                  // }
+                                  // changePassword();
+                                  
                                 },
                                 child: const Text(
                                   "Submit",
