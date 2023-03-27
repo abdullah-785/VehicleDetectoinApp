@@ -274,43 +274,43 @@ class _AdminChangePasswordState extends State<AdminChangePassword> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color.fromARGB(255, 23, 69, 103),
-        unselectedItemColor: const Color.fromARGB(255, 23, 69, 103),
-        iconSize: 30,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Setting()));
-                },
-                child: const Icon(Icons.settings)),
-            label: 'Setting',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => InputVideo()));
-                },
-                child: const Icon(Icons.add_a_photo)),
-            label: 'Add',
-          ),
-          BottomNavigationBarItem(
-            icon: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profile()));
-                },
-                child: const Icon(Icons.account_circle)),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: currentIndex,
+      //   onTap: (index) => setState(() => currentIndex = index),
+      //   type: BottomNavigationBarType.fixed,
+      //   selectedItemColor: const Color.fromARGB(255, 23, 69, 103),
+      //   unselectedItemColor: const Color.fromARGB(255, 23, 69, 103),
+      //   iconSize: 30,
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: GestureDetector(
+      //           onTap: () {
+      //             Navigator.push(context,
+      //                 MaterialPageRoute(builder: (context) => const Setting()));
+      //           },
+      //           child: const Icon(Icons.settings)),
+      //       label: 'Setting',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: GestureDetector(
+      //           onTap: () {
+      //             Navigator.push(context,
+      //                 MaterialPageRoute(builder: (context) => InputVideo()));
+      //           },
+      //           child: const Icon(Icons.add_a_photo)),
+      //       label: 'Add',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: GestureDetector(
+      //           onTap: () {
+      //             Navigator.push(context,
+      //                 MaterialPageRoute(builder: (context) => Profile()));
+      //           },
+      //           child: const Icon(Icons.account_circle)),
+      //       label: 'Profile',
+      //     ),
+      //   ],
+      // ),
     );
   }
 

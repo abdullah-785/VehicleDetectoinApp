@@ -119,41 +119,41 @@ class _SettingState extends State<Setting> {
                     const SizedBox(
                       height: 50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SecondHomePage()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32,
-                          ),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.home,
-                                size: 30,
-                                color: Color.fromARGB(255, 78, 206, 113),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "Home Page",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 8),
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => SecondHomePage()));
+                    //     },
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.symmetric(
+                    //         horizontal: 32,
+                    //       ),
+                    //       child: Row(
+                    //         children: const [
+                    //           Icon(
+                    //             Icons.home,
+                    //             size: 30,
+                    //             color: Color.fromARGB(255, 78, 206, 113),
+                    //           ),
+                    //           SizedBox(
+                    //             width: 20,
+                    //           ),
+                    //           Text(
+                    //             "Home Page",
+                    //             style: TextStyle(
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.w600,
+                    //                 color: Colors.grey),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    // ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: GestureDetector(
@@ -377,7 +377,10 @@ class _SettingState extends State<Setting> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: GestureDetector(
                         onTap: () async {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => PoliceLogin()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PoliceLogin()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -403,7 +406,9 @@ class _SettingState extends State<Setting> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8,),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: GestureDetector(
@@ -464,11 +469,13 @@ class _SettingState extends State<Setting> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => InputVideo()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondHomePage()));
                 },
-                child: const Icon(Icons.add_a_photo)),
-            label: 'Add',
+                child: const Icon(Icons.home)),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(

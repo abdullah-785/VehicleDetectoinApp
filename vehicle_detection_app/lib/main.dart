@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vehicle_detection_app/pages/PolicePages/police_admin_panel.dart';
+import 'package:vehicle_detection_app/pages/PolicePages/police_login.dart';
 import 'package:vehicle_detection_app/pages/change_password.dart';
 import 'package:vehicle_detection_app/pages/first_home_page.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
@@ -43,6 +45,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FirstHomePage();
+    return Splash();
   }
 }

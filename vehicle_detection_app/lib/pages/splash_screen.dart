@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:vehicle_detection_app/pages/first_home_page.dart';
 import 'package:vehicle_detection_app/pages/login.dart';
 
 
@@ -24,7 +25,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin{
 
   void navigationPage() {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Login() ));
+        MaterialPageRoute(builder: (context) => FirstHomePage()));
   }
 
   @override

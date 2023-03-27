@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
+import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 
 import '../widgets/notifications_list.dart';
@@ -137,15 +138,13 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => InputVideo()));
-              },
-              child: const Icon(Icons.add_a_photo)
-            ),
-            label: 'Add',
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                },
+                child: const Icon(Icons.home)),
+
+            label: 'Home',
           ),
           
           BottomNavigationBarItem(

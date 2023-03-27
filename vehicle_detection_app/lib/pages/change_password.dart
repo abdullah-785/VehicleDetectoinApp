@@ -9,6 +9,7 @@ import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/login.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
+import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -291,10 +292,11 @@ class _ChangePasswordState extends State<ChangePassword> {
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => InputVideo()));
+                      MaterialPageRoute(builder: (context) => SecondHomePage()));
                 },
-                child: const Icon(Icons.add_a_photo)),
-            label: 'Add',
+                child: const Icon(Icons.home)),
+
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(

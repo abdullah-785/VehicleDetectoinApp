@@ -51,6 +51,8 @@ dependencies:
   email_otp: ^1.0.4
   firebase_database: ^10.0.9
   persistent_bottom_nav_bar:
+  firebase_admin: ^0.2.0
+  expandable: ^5.0.1
  
 
 

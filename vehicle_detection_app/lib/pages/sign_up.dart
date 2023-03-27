@@ -4,6 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
@@ -30,6 +31,14 @@ class _SignUpState extends State<SignUp> {
   bool isLoading = false;
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  late DatabaseReference dbRef;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('users');
+  }
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -522,6 +531,7 @@ class _SignUpState extends State<SignUp> {
                                     _descriptionController.text;
 
                                 print(_nameController.text);
+                                String email = _emailController.text;
 
                                 await firebaseFirestore
                                     .collection("users")
@@ -529,6 +539,10 @@ class _SignUpState extends State<SignUp> {
                                     .set(signUpModel.toMap());
                                 Fluttertoast.showToast(
                                     msg: "Account created successfully :) ");
+
+                                StoreDataInRealTimeDatabase(
+                                    user.uid);
+
                                 setState(() {
                                   isLoading = false;
                                 });
@@ -560,8 +574,10 @@ class _SignUpState extends State<SignUp> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => const Login()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()));
                       },
                       child: const Text("Login Here",
                           style: TextStyle(
@@ -589,5 +605,21 @@ class _SignUpState extends State<SignUp> {
     final path = result.files.single.path!;
 
     setState(() => file = File(path));
+  }
+
+  void StoreDataInRealTimeDatabase(String uid) {
+    //Real Time database
+    Map<String, String> us = {
+      'city': _cityController.text,
+      'email': _emailController.text,
+      'phoneNumber': _phoneNumberController.text,
+      'image': imageUrl.toString(),
+      'name': _nameController.text,
+      'uid': uid
+    };
+    // print("uid is : "+ uid);
+
+    // dbRef.push().set(us);
+    dbRef.child(uid).set(us);
   }
 }

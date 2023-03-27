@@ -5,20 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/police_global_variable.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_panel.dart';
+import 'package:vehicle_detection_app/pages/PolicePages/police_admin_panel.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'dart:io' show Platform;
 
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:vehicle_detection_app/pages/sign_up.dart';
 
-class AdminOptVerification extends StatefulWidget {
+class PoliceOptVerification extends StatefulWidget {
   @override
-  State<AdminOptVerification> createState() => _AdminOptVerificationState();
+  State<PoliceOptVerification> createState() => _PoliceOptVerificationState();
 }
 
-class _AdminOptVerificationState extends State<AdminOptVerification> {
+class _PoliceOptVerificationState extends State<PoliceOptVerification> {
   EmailOTP myOtp = new EmailOTP();
 
   @override
@@ -157,10 +159,7 @@ class _AdminOptVerificationState extends State<AdminOptVerification> {
                         onPressed: () {
                           verifyOtp();
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AdminPanel()));
+                          
                         },
                         child: const Text(
                           "Submit",
@@ -174,7 +173,6 @@ class _AdminOptVerificationState extends State<AdminOptVerification> {
                   InkWell(
                     onTap: () {
                       sendEmailOtp();
-                      // bar.show(context);
                     },
                     child: const Text("Resend OTP",
                         style: TextStyle(
@@ -195,7 +193,7 @@ void sendEmailOtp() async {
     myOtp.setConfig(
       appName: "Vehicle Detection App",
       appEmail: "19101001-038@uskt.edu.pk",
-      userEmail: adminEmailForOtp,
+      userEmail: policeEmailForOtp,
       otpLength: 4,
       otpType: OTPType.digitsOnly
     );
@@ -208,7 +206,7 @@ void sendEmailOtp() async {
   void verifyOtp() async {
     if(await myOtp.verifyOTP(otp: _optController.text) == true){
       Fluttertoast.showToast(msg: "Successfully");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminPanel()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PolicePanel()));
     }else{
       Fluttertoast.showToast(msg: "Invalid OTP");
     }

@@ -162,15 +162,13 @@ class _SecondHomePageState extends State<SecondHomePage> {
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => InputVideo()));
-              },
-              child: const Icon(Icons.add_a_photo)
-            ),
-            label: 'Add',
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                },
+                child: const Icon(Icons.home)),
+
+            label: 'Home',
           ),
           
           BottomNavigationBarItem(

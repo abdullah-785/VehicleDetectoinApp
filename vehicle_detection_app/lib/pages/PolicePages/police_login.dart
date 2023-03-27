@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/models/adminModel.dart';
+import 'package:vehicle_detection_app/models/policeModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_opt_verification.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_panel.dart';
+import 'package:vehicle_detection_app/pages/PolicePages/police_opt_verification.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
+
+import '../../GlobalVaribales/police_global_variable.dart';
 
 class PoliceLogin extends StatefulWidget {
   const PoliceLogin({Key? key}) : super(key: key);
@@ -23,7 +27,8 @@ class _PoliceLoginState extends State<PoliceLogin> {
   bool isLoading = false;
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwrodController = new TextEditingController();
-  AdminModel adminModel = new AdminModel();
+  // AdminModel adminModel = new AdminModel();
+  PoliceModel policeModel = new PoliceModel();
 
   @override
   void initState() {
@@ -31,11 +36,11 @@ class _PoliceLoginState extends State<PoliceLogin> {
     super.initState();
 
     FirebaseFirestore.instance
-        .collection("admin")
-        .doc('ntqabzT1arEobDEDZ3JJ')
+        .collection("police")
+        .doc('iigtad1gGgiT7LjpENbP')
         .get()
         .then((value) {
-      adminModel = AdminModel.fromMap(value.data());
+      policeModel = PoliceModel.fromMap(value.data());
     });
   }
 
@@ -63,7 +68,7 @@ class _PoliceLoginState extends State<PoliceLogin> {
                   width: MediaQuery.of(context).size.width * 0.21,
                 ),
                 const Text(
-                  "Admin Panel",
+                  "Police Panel",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -213,7 +218,7 @@ class _PoliceLoginState extends State<PoliceLogin> {
                             backgroundColor: Color.fromARGB(255, 78, 206, 113),
                           ),
                           onPressed: () {
-                            // policeLogin();
+                            policeLogin();
                           },
                           child: (isLoading)? CircularProgressIndicator(
                             color: Colors.white,
@@ -294,35 +299,36 @@ class _PoliceLoginState extends State<PoliceLogin> {
       });
         Fluttertoast.showToast(msg: "Please enter your password");
         return;
-      } else if (_emailController.text != adminModel.email) {
+      } else if (_emailController.text != policeModel.email) {
         setState(() {
         isLoading = false;
       });
         Fluttertoast.showToast(msg: "Email is not correct");
         return;
-      } else if (_emailController.text != adminModel.email) {
+      } else if (_emailController.text != policeModel.email) {
         setState(() {
         isLoading = false;
       });
         Fluttertoast.showToast(msg: "Password is not correct");
         return;
-      } else if (_emailController.text == adminModel.email &&
-          _passwrodController.text == adminModel.password) {
+      } else if (_emailController.text == policeModel.email &&
+          _passwrodController.text == policeModel.password) {
 
-          admin_global_uid = adminModel.uid;
-          admin_global_name = adminModel.name;
-          admin_global_password = adminModel.password;
-          admin_global_email = adminModel.email;
-          admin_global_imageUrl = adminModel.imageUrl;
+          // admin_global_uid = adminModel.uid;
+          // admin_global_name = adminModel.name;
+          // admin_global_password = adminModel.password;
+          // admin_global_email = adminModel.email;
+          // admin_global_imageUrl = adminModel.imageUrl;
           
-          adminEmailForOtp = _emailController.text;
+          policeEmailForOtp = _emailController.text;
+          print(policeEmailForOtp);
 
           setState(() {
         isLoading = false;
       });
-      Fluttertoast.showToast(msg: "Welcome to Admin Panel");
+      // Fluttertoast.showToast(msg: "Welcome to Admin Panel");
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AdminOptVerification()));
+            MaterialPageRoute(builder: (context) => PoliceOptVerification()));
 
       }
     } catch (e) {

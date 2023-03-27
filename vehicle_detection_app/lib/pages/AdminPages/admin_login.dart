@@ -336,7 +336,7 @@ class _AdminLoginState extends State<AdminLogin> {
           setState(() {
         isLoading = false;
       });
-      Fluttertoast.showToast(msg: "Welcome to Admin Panel");
+      // Fluttertoast.showToast(msg: "Welcome to Admin Panel");
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => AdminOptVerification()));
 
