@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vehicle_detection_app/pages/AdminPages/admin_login.dart';
+import 'package:vehicle_detection_app/pages/AdminPages/admin_panel.dart';
 import 'package:vehicle_detection_app/pages/PolicePages/police_admin_panel.dart';
 import 'package:vehicle_detection_app/pages/PolicePages/police_login.dart';
 import 'package:vehicle_detection_app/pages/change_password.dart';

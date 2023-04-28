@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
@@ -6,7 +6,6 @@ import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 
 import '../widgets/notifications_list.dart';
-
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -52,9 +51,9 @@ class _NotificationPageState extends State<NotificationPage> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -131,7 +130,7 @@ class _NotificationPageState extends State<NotificationPage> {
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Setting() ));
+                      MaterialPageRoute(builder: (context) => const Setting()));
                 },
                 child: const Icon(Icons.settings)),
             label: 'Setting',
@@ -139,19 +138,19 @@ class _NotificationPageState extends State<NotificationPage> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondHomePage()));
                 },
                 child: const Icon(Icons.home)),
-
             label: 'Home',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',

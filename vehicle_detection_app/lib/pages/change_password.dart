@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +60,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: const Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -134,7 +134,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fontSize: 20,
                         ),
                         decoration: InputDecoration(
-                          
                           focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 78, 206, 113))),
@@ -200,7 +199,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                           fontSize: 20,
                         ),
                         decoration: InputDecoration(
-                          
                           focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                   color: Color.fromARGB(255, 78, 206, 113))),
@@ -244,26 +242,26 @@ class _ChangePasswordState extends State<ChangePassword> {
                       height: 28,
                     ),
                     SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            height: 50,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      Color.fromARGB(255, 78, 206, 113),
-                                ),
-                                onPressed: () async {
-                                  changePassword();
-                                  
-                                },
-                                child: (isLoading)? const CircularProgressIndicator(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 50,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 78, 206, 113),
+                          ),
+                          onPressed: () async {
+                            changePassword();
+                          },
+                          child: (isLoading)
+                              ? const CircularProgressIndicator(
                                   color: Colors.white,
-                                ) : const Text(
+                                )
+                              : const Text(
                                   "Submit",
                                   style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.bold),
                                 )),
-                          ),
+                    ),
                   ],
                 ),
               ),
@@ -291,11 +289,12 @@ class _ChangePasswordState extends State<ChangePassword> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondHomePage()));
                 },
                 child: const Icon(Icons.home)),
-
             label: 'Home',
           ),
           BottomNavigationBarItem(

@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
@@ -52,9 +52,9 @@ class _LanguageState extends State<Language> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: const Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -260,11 +260,12 @@ class _LanguageState extends State<Language> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondHomePage()));
                 },
                 child: const Icon(Icons.home)),
-
             label: 'Home',
           ),
           BottomNavigationBarItem(

@@ -248,7 +248,7 @@ class _AdminPanelState extends State<AdminPanel> {
                                                                       context,
                                                                       MaterialPageRoute(
                                                                           builder: (context) =>
-                                                                              UserDetailOnAdminPanel()));
+                                                                              UserDetailOnAdminPanel(uuid: uidForDeleteAccount)));
                                                                 },
                                                                 child:
                                                                     const Text(
@@ -349,6 +349,22 @@ class _AdminPanelState extends State<AdminPanel> {
                       builder: (context) => AdminChangePassword()));
             },
           ),
+          // ListTile(
+          //   leading: const Icon(
+          //     Icons.switch_access_shortcut,
+          //     size: 28,
+          //     color: Color.fromARGB(255, 78, 206, 113),
+          //   ),
+          //   title: Text(
+          //     'Manage Home',
+          //     style: listTextStyle(),
+          //   ),
+          //   onTap: () {
+          //     // logout(context);
+          //     Navigator.push(
+          //         context, MaterialPageRoute(builder: (context) => Setting()));
+          //   },
+          // ),
           ListTile(
             leading: const Icon(
               Icons.switch_access_shortcut,

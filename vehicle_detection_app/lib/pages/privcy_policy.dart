@@ -1,11 +1,10 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/second_home_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
-
 
 class PrivacyPolice extends StatefulWidget {
   const PrivacyPolice({Key? key}) : super(key: key);
@@ -51,9 +50,9 @@ class _PrivacyPoliceState extends State<PrivacyPolice> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -140,19 +139,19 @@ class _PrivacyPoliceState extends State<PrivacyPolice> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondHomePage()));
                 },
                 child: const Icon(Icons.home)),
-
             label: 'Home',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',

@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:expandable/expandable.dart';
@@ -11,6 +13,14 @@ class PolicePanel extends StatefulWidget {
 }
 
 class _PolicePanelState extends State<PolicePanel> {
+  late DatabaseReference dbRef;
+
+  @override
+  void initState() {
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child('notification');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,69 +45,86 @@ class _PolicePanelState extends State<PolicePanel> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 5,
-                right: 5,
-              ),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 1,
-                height: MediaQuery.of(context).size.height * 1,
-                child: ListView.builder(
-                    itemCount: 20,
-                    itemBuilder: ((context, index) {
-                      return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ExpandablePanel(
-                              header: Text(
-                                "App Detecting something",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17,
-                                ),
-                              ),
-                              collapsed: Text(
-                                "More details...",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                              ),
-                              expanded: Column(
-                                children: [
-                                  Row(
+            Column(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: MediaQuery.of(context).size.height * 1,
+                  child: FirebaseAnimatedList(
+                      query: dbRef,
+                      itemBuilder: (context, snapshot, animation, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 8, right: 4, top: 6, bottom: 6),
+                              child: ExpandablePanel(
+                                  header: Text(
+                                    snapshot
+                                        .child(
+                                          "dateTime",
+                                        )
+                                        .value
+                                        .toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  collapsed: Text(
+                                    "Details...",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                  expanded: Column(
                                     children: [
-                                      Text(
-                                        "Vehicle Name : ",
-                                        style: textStyleOfExpanded(),
+                                      Row(children: [
+                                        Text(
+                                          "Vehicle Name : ",
+                                          style: textStyleOfExpanded(),
+                                        ),
+                                        Text(snapshot
+                                            .child("names")
+                                            .value
+                                            .toString()),
+                                      ]),
+                                      Row(
+                                        children: [
+                                          Text("Location : ",
+                                              style: textStyleOfExpanded()),
+                                          Text("Sialkot at Tool Plaza"),
+                                        ],
                                       ),
-                                      Text("Truck"),
+                                      Row(
+                                        children: [
+                                          Text("Date & Time : ",
+                                              style: textStyleOfExpanded()),
+                                          Text(snapshot
+                                              .child("dateTime")
+                                              .value
+                                              .toString()),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text("Percentage : ",
+                                              style: textStyleOfExpanded()),
+                                          Text(snapshot
+                                              .child("percentage")
+                                              .value
+                                              .toString()),
+                                        ],
+                                      ),
                                     ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("Location : ",
-                                          style: textStyleOfExpanded()),
-                                      Text("Sialkot at Tool Plaza"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("Date & Time : ",
-                                          style: textStyleOfExpanded()),
-                                      Text("10 March 2023 at 10:00 AM"),
-                                    ],
-                                  ),
-                                ],
-                              )),
-                        ),
-                      );
-                    })),
-              ),
-            ),
+                                  )),
+                            ),
+                          ),
+                        );
+                      }),
+                ),
+              ],
+            )
           ],
         ),
       ),

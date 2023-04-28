@@ -1,23 +1,42 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:expandable/expandable.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class UserDetailOnAdminPanel extends StatefulWidget {
-  const UserDetailOnAdminPanel({super.key});
+  UserDetailOnAdminPanel({super.key, required this.uuid});
+  String uuid;
 
   @override
   State<UserDetailOnAdminPanel> createState() => _UserDetailOnAdminPanelState();
 }
 
 class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
-  List<String> images = [
-    "https://www.researchgate.net/publication/332255419/figure/fig2/AS:845119586582528@1578503619055/Examples-of-car-detection-by-YOLO-object-detector.ppm",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
-    "https://static.javatpoint.com/tutorial/flutter/images/flutter-logo.png",
+  //show record from userDetectionRecord
+  late DatabaseReference dbRef;
+  //for deleting the record from userDetectionRecord
+  late DatabaseReference dbRef2;
+  //for deleting the record from notification
+  late DatabaseReference dbRef3;
 
-  ];
+  @override
+  void initState() {
+    super.initState();
+
+    dbRef = FirebaseDatabase.instance
+        .ref()
+        .child("userDetectionRecord")
+        .child(widget.uuid);
+
+    //for deleting the record from userDetectionRecord
+    dbRef2 = FirebaseDatabase.instance.ref().child("userDetectionRecord");
+
+    //for deleting the record from notification
+    // dbRef2 = FirebaseDatabase.instance
+    //     .ref()
+    //     .child("notification");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +67,9 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: const Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -96,23 +115,99 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const SizedBox(height: 25,),
+                    const SizedBox(
+                      height: 25,
+                    ),
                     SizedBox(
+                      width: MediaQuery.of(context).size.width * 1,
                       height: MediaQuery.of(context).size.height * 1,
-                      child: Container(
-                          padding: const EdgeInsets.all(12.0),
-                          child: GridView.builder(
-                            itemCount: images.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 4.0,
-                                    mainAxisSpacing: 4.0),
-                            itemBuilder: (BuildContext context, int index) {
-                              return Image.network(images[index]);
-                            },
-                          )),
-                    )
+                      child: FirebaseAnimatedList(
+                          query: dbRef,
+                          itemBuilder: (context, snapshot, animation, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 8, right: 4, top: 6, bottom: 6),
+                                  child: ExpandablePanel(
+                                      header: Text(
+                                        snapshot
+                                            .child(
+                                              "dateTime",
+                                            )
+                                            .value
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                      collapsed: Text(
+                                        "Details...",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey),
+                                      ),
+                                      expanded: Column(
+                                        children: [
+                                          Row(children: [
+                                            Text(
+                                              "Vehicle Name : ",
+                                              style: textStyleOfExpanded(),
+                                            ),
+                                            Text(snapshot
+                                                .child("names")
+                                                .value
+                                                .toString()),
+                                          ]),
+                                          Row(
+                                            children: [
+                                              Text("Location : ",
+                                                  style: textStyleOfExpanded()),
+                                              Text("Sialkot at Tool Plaza"),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text("Date & Time : ",
+                                                  style: textStyleOfExpanded()),
+                                              Text(snapshot
+                                                  .child("dateTime")
+                                                  .value
+                                                  .toString()),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text("Percentage : ",
+                                                  style: textStyleOfExpanded()),
+                                              Text(snapshot
+                                                  .child("percentage")
+                                                  .value
+                                                  .toString()),
+                                            ],
+                                          ),
+                                          TextButton(
+                                              onPressed: () async {
+                                                String currentClicking =
+                                                    snapshot
+                                                        .child("dateTime")
+                                                        .value
+                                                        .toString();
+                                                print(currentClicking);
+                                                await dbRef2
+                                                    .child(currentClicking)
+                                                    .remove();
+                                                //Deletion from user credentials
+                                              },
+                                              child: Text("Delete"))
+                                        ],
+                                      )),
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
                   ],
                 ),
               ),
@@ -122,4 +217,8 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
       ),
     );
   }
+}
+
+TextStyle textStyleOfExpanded() {
+  return TextStyle(fontWeight: FontWeight.bold);
 }

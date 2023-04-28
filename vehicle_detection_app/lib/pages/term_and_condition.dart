@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/input_video.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
@@ -50,9 +50,9 @@ class _TermConditionState extends State<TermCondition> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: Colors.green,
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -132,7 +132,7 @@ class _TermConditionState extends State<TermCondition> {
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Setting() ));
+                      MaterialPageRoute(builder: (context) => const Setting()));
                 },
                 child: const Icon(Icons.settings)),
             label: 'Setting',
@@ -140,19 +140,19 @@ class _TermConditionState extends State<TermCondition> {
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SecondHomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SecondHomePage()));
                 },
                 child: const Icon(Icons.home)),
-
             label: 'Home',
           ),
-          
           BottomNavigationBarItem(
             icon: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) =>  Profile()));
+                      MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: const Icon(Icons.account_circle)),
             label: 'Profile',

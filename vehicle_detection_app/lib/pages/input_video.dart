@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
@@ -54,9 +54,9 @@ class _InputVideoState extends State<InputVideo> {
                   ),
                 ),
                 const Spacer(),
-                Badge(
+                badges.Badge(
                     badgeColor: const Color.fromARGB(255, 78, 206, 113),
-                    animationType: BadgeAnimationType.slide,
+                    // animationType: BadgeAnimationType.slide,
                     badgeContent: const Padding(
                       padding: EdgeInsets.all(1.0),
                       child: Text(
@@ -125,8 +125,9 @@ class _InputVideoState extends State<InputVideo> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 70,),
-
+                    SizedBox(
+                      height: 70,
+                    ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.92,
                       height: 50,
