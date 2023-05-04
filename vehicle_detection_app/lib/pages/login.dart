@@ -8,6 +8,7 @@ import 'package:vehicle_detection_app/pages/opt_verification.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
 import 'package:vehicle_detection_app/pages/sign_up.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -22,6 +23,9 @@ class _LoginState extends State<Login> {
   final _auth = FirebaseAuth.instance;
   bool _obscureText = true;
   bool isLoading = false;
+
+  List usersType = ['User', 'Admin', 'Police'];
+  String? selectedUserType;
 
   @override
   Widget build(BuildContext context) {
@@ -181,6 +185,47 @@ class _LoginState extends State<Login> {
                           ),
                         )),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: DropdownButton(
+                      dropdownColor: Colors.white,
+                      icon: Icon(Icons.arrow_drop_down, color: Colors.grey),
+                      iconSize: 36,
+                      isExpanded: true,
+                      style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
+                      elevation: 10,
+                      hint: "Select".text.color(Colors.grey).make(),
+                      value: selectedUserType,
+                      underline: Container(
+                        decoration: const ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                width: 1.0,
+                                style: BorderStyle.solid,
+                                color: Colors.grey),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                        ),
+                      ),
+                      onChanged: (newValue) {
+                        // valuechoose = newValue
+                        setState(() {
+                          selectedUserType = newValue as String?;
+                          // print(bedroomsvar);
+                        });
+                      },
+                      items: usersType.map((valueItem) {
+                        return DropdownMenuItem(
+                          value: valueItem,
+                          child: Text(valueItem),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -214,7 +259,6 @@ class _LoginState extends State<Login> {
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                                 strokeWidth: 4.0,
-                                
                               )
                             : const Text(
                                 "Login",

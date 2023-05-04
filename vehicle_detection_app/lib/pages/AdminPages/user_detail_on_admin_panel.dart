@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:expandable/expandable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,8 @@ class UserDetailOnAdminPanel extends StatefulWidget {
 class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
   //show record from userDetectionRecord
   late DatabaseReference dbRef;
-  //for deleting the record from userDetectionRecord
-  late DatabaseReference dbRef2;
-  //for deleting the record from notification
-  late DatabaseReference dbRef3;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -28,14 +27,6 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
         .ref()
         .child("userDetectionRecord")
         .child(widget.uuid);
-
-    //for deleting the record from userDetectionRecord
-    dbRef2 = FirebaseDatabase.instance.ref().child("userDetectionRecord");
-
-    //for deleting the record from notification
-    // dbRef2 = FirebaseDatabase.instance
-    //     .ref()
-    //     .child("notification");
   }
 
   @override
@@ -195,10 +186,19 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
                                                         .value
                                                         .toString();
                                                 print(currentClicking);
-                                                await dbRef2
+
+                                                await dbRef
                                                     .child(currentClicking)
                                                     .remove();
+
+                                                print(user!.uid);
+
+                                                deleteFromNotification(
+                                                    user!.uid, currentClicking);
+
                                                 //Deletion from user credentials
+
+                                                // showAlertDialog(context);
                                               },
                                               child: Text("Delete"))
                                         ],
@@ -221,4 +221,39 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
 
 TextStyle textStyleOfExpanded() {
   return TextStyle(fontWeight: FontWeight.bold);
+}
+
+deleteFromNotification(String uuid, String SelectedDateTime) async {
+  //for deleting the record from notification
+  late DatabaseReference dbRef2;
+  //for deleting the record from notification
+  dbRef2 = FirebaseDatabase.instance.ref().child("notification");
+  await dbRef2.child(uuid).child(SelectedDateTime).remove();
+}
+
+showAlertDialog(BuildContext context) {
+  // Create button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () async {
+      Navigator.of(context).pop();
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Alert"),
+    content: Text("Are you sure you want to delete record?"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }

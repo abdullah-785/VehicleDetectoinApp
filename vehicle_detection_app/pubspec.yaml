@@ -53,6 +53,7 @@ dependencies:
   persistent_bottom_nav_bar:
   firebase_admin: ^0.2.0
   expandable: ^5.0.1
+  velocity_x: ^3.6.0
  
 
 
@@ -63,7 +64,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.10.0
 
 flutter_icons:
-  image_path: "images/logo1.png"
+  image_path: "images/logo.png"
   android: true
   ios: true
 
