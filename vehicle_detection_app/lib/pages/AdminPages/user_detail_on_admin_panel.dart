@@ -191,14 +191,11 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
                                                     .child(currentClicking)
                                                     .remove();
 
-                                                print(user!.uid);
-
-                                                deleteFromNotification(
-                                                    user!.uid, currentClicking);
+                                                // print(user!.uid);
 
                                                 //Deletion from user credentials
 
-                                                // showAlertDialog(context);
+                                                showAlertDialog(context);
                                               },
                                               child: Text("Delete"))
                                         ],

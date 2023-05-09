@@ -190,80 +190,84 @@ class _ProfileState extends State<Profile> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   )),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 1,
-              height: MediaQuery.of(context).size.height * 1,
-              child: FirebaseAnimatedList(
-                  query: dbRef,
-                  itemBuilder: (context, snapshot, animation, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8, right: 4, top: 6, bottom: 6),
-                          child: ExpandablePanel(
-                              header: Text(
-                                snapshot
-                                    .child(
-                                      "dateTime",
-                                    )
-                                    .value
-                                    .toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              collapsed: Text(
-                                "Details...",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                              ),
-                              expanded: Column(
-                                children: [
-                                  Row(children: [
-                                    Text(
-                                      "Vehicle Name : ",
-                                      style: textStyleOfExpanded(),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 1,
+                height: MediaQuery.of(context).size.height * 1,
+                child: FirebaseAnimatedList(
+                    query: dbRef,
+                    itemBuilder: (context, snapshot, animation, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8, right: 4, top: 6, bottom: 6),
+                            child: ExpandablePanel(
+                                header: Text(
+                                  snapshot
+                                      .child(
+                                        "dateTime",
+                                      )
+                                      .value
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                collapsed: Text(
+                                  "Details...",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey),
+                                ),
+                                expanded: Column(
+                                  children: [
+                                    Row(children: [
+                                      Text(
+                                        "Vehicle Name : ",
+                                        style: textStyleOfExpanded(),
+                                      ),
+                                      Text(snapshot
+                                          .child("names")
+                                          .value
+                                          .toString()),
+                                    ]),
+                                    Row(
+                                      children: [
+                                        Text("Location : ",
+                                            style: textStyleOfExpanded()),
+                                        Text("Sialkot at Tool Plaza"),
+                                      ],
                                     ),
-                                    Text(snapshot
-                                        .child("names")
-                                        .value
-                                        .toString()),
-                                  ]),
-                                  Row(
-                                    children: [
-                                      Text("Location : ",
-                                          style: textStyleOfExpanded()),
-                                      Text("Sialkot at Tool Plaza"),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("Date & Time : ",
-                                          style: textStyleOfExpanded()),
-                                      Text(snapshot
-                                          .child("dateTime")
-                                          .value
-                                          .toString()),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("Percentage : ",
-                                          style: textStyleOfExpanded()),
-                                      Text(snapshot
-                                          .child("percentage")
-                                          .value
-                                          .toString()),
-                                    ],
-                                  ),
-                                ],
-                              )),
+                                    Row(
+                                      children: [
+                                        Text("Date & Time : ",
+                                            style: textStyleOfExpanded()),
+                                        Text(snapshot
+                                            .child("dateTime")
+                                            .value
+                                            .toString()),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text("Percentage : ",
+                                            style: textStyleOfExpanded()),
+                                        Text(snapshot
+                                            .child("percentage")
+                                            .value
+                                            .toString()),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
           ],
         ),

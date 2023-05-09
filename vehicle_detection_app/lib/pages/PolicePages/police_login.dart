@@ -220,13 +220,16 @@ class _PoliceLoginState extends State<PoliceLogin> {
                           onPressed: () {
                             policeLogin();
                           },
-                          child: (isLoading)? CircularProgressIndicator(
-                            color: Colors.white,
-                          ) : Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          )),
+                          child: (isLoading)
+                              ? CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold),
+                                )),
                     ),
                   ],
                 ),
@@ -276,60 +279,51 @@ class _PoliceLoginState extends State<PoliceLogin> {
   }
 
   void policeLogin() {
-    
     try {
       setState(() {
         isLoading = true;
       });
       if (_emailController.text.isEmpty && _passwrodController.text.isEmpty) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
         Fluttertoast.showToast(msg: "Please enter your required fields");
         return;
       } else if (_emailController.text.isEmpty) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
         Fluttertoast.showToast(msg: "Please an email address");
         return;
       } else if (_passwrodController.text.isEmpty) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
         Fluttertoast.showToast(msg: "Please enter your password");
         return;
       } else if (_emailController.text != policeModel.email) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
         Fluttertoast.showToast(msg: "Email is not correct");
         return;
       } else if (_emailController.text != policeModel.email) {
         setState(() {
-        isLoading = false;
-      });
+          isLoading = false;
+        });
         Fluttertoast.showToast(msg: "Password is not correct");
         return;
       } else if (_emailController.text == policeModel.email &&
           _passwrodController.text == policeModel.password) {
+        policeEmailForOtp = _emailController.text;
+        print(policeEmailForOtp);
 
-          // admin_global_uid = adminModel.uid;
-          // admin_global_name = adminModel.name;
-          // admin_global_password = adminModel.password;
-          // admin_global_email = adminModel.email;
-          // admin_global_imageUrl = adminModel.imageUrl;
-          
-          policeEmailForOtp = _emailController.text;
-          print(policeEmailForOtp);
+        setState(() {
+          isLoading = false;
+        });
 
-          setState(() {
-        isLoading = false;
-      });
-      // Fluttertoast.showToast(msg: "Welcome to Admin Panel");
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => PoliceOptVerification()));
-
       }
     } catch (e) {
       setState(() {

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:vehicle_detection_app/pages/first_home_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:expandable/expandable.dart';
 
@@ -134,8 +135,8 @@ class _PolicePanelState extends State<PolicePanel> {
   // The logout function
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => Setting()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => FirstHomePage()));
   }
 
   TextStyle textStyleOfExpanded() {

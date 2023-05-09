@@ -13,17 +13,16 @@ import 'package:email_otp/email_otp.dart';
 
 class OptVerification extends StatefulWidget {
   final String userEmail;
-   const OptVerification({
-    Key? key, required this.userEmail,
-
-   }) : super(key: key);
+  const OptVerification({
+    Key? key,
+    required this.userEmail,
+  }) : super(key: key);
 
   @override
   State<OptVerification> createState() => _OptVerificationState();
 }
 
 class _OptVerificationState extends State<OptVerification> {
-  
   User? user = FirebaseAuth.instance.currentUser;
   SignUpModel loggedInUser = SignUpModel();
   // late EmailAuth emailAuth;
@@ -42,7 +41,7 @@ class _OptVerificationState extends State<OptVerification> {
       loggedInUser = SignUpModel.fromMap(value.data());
       setState(() {});
     });
-    print(userEmial);
+    print("user email is " + widget.userEmail);
 
     sendEmailOtp();
   }
@@ -87,8 +86,8 @@ class _OptVerificationState extends State<OptVerification> {
               child: Column(
                 children: [
                   const SizedBox(
-                          height: 10,
-                        ),
+                    height: 10,
+                  ),
                   // Text("${loggedInUser.phoneNumber}"),
                   Text(
                     "Enter OTP Code",
@@ -172,15 +171,16 @@ class _OptVerificationState extends State<OptVerification> {
                         ),
                         onPressed: () {
                           verifyOtp();
-
                         },
-                        child: (isLoading)? const CircularProgressIndicator(
-                          color: Colors.white,
-                        ) : const Text(
-                          "Submit",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        )),
+                        child: (isLoading)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Submit",
+                                style: TextStyle(
+                                    fontSize: 22, fontWeight: FontWeight.bold),
+                              )),
                   ),
                   const SizedBox(
                     height: 15,
@@ -205,17 +205,16 @@ class _OptVerificationState extends State<OptVerification> {
     );
   }
 
-
   void sendEmailOtp() async {
+    print(widget.userEmail);
     myOtp.setConfig(
-      appName: "Vehicle Detection App",
-      appEmail: "19101001-038@uskt.edu.pk",
-      userEmail: userEmial,
-      otpLength: 4,
-      otpType: OTPType.digitsOnly
-    );
+        appName: "Vehicle Detection App",
+        appEmail: "19101001-038@uskt.edu.pk",
+        userEmail: widget.userEmail,
+        otpLength: 4,
+        otpType: OTPType.digitsOnly);
 
-    if(await myOtp.sendOTP() == true){
+    if (await myOtp.sendOTP() == true) {
       Fluttertoast.showToast(msg: "OTP send successfully");
     }
   }
@@ -225,20 +224,20 @@ class _OptVerificationState extends State<OptVerification> {
       isLoading = true;
     });
 
-    if(await myOtp.verifyOTP(otp: _optController.text) == true){
+    if (await myOtp.verifyOTP(otp: _optController.text) == true) {
       Fluttertoast.showToast(msg: "Successfully");
       setState(() {
-      isLoading = false;
-    });
-      Navigator.push(context, MaterialPageRoute(builder: (context) => SecondHomePage()));
-    }else{
+        isLoading = false;
+      });
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SecondHomePage()));
+    } else {
       Fluttertoast.showToast(msg: "Invalid OTP");
       setState(() {
-      isLoading = false;
-    });
+        isLoading = false;
+      });
     }
   }
-
 
   void callGlobalVariable() {
     global_uid = loggedInUser.uid;

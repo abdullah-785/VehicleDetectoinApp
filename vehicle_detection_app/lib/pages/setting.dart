@@ -334,78 +334,78 @@ class _SettingState extends State<Setting> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AdminLogin()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.admin_panel_settings,
-                                size: 30,
-                                color: Color.fromARGB(255, 78, 206, 113),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "Switch to Admin",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: GestureDetector(
-                        onTap: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PoliceLogin()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 32),
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.local_police_rounded,
-                                size: 30,
-                                color: Color.fromARGB(255, 78, 206, 113),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              Text(
-                                "Switch to Police",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 8),
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => AdminLogin()));
+                    //     },
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 32),
+                    //       child: Row(
+                    //         children: const [
+                    //           Icon(
+                    //             Icons.admin_panel_settings,
+                    //             size: 30,
+                    //             color: Color.fromARGB(255, 78, 206, 113),
+                    //           ),
+                    //           SizedBox(
+                    //             width: 20,
+                    //           ),
+                    //           Text(
+                    //             "Switch to Admin",
+                    //             style: TextStyle(
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.w600,
+                    //                 color: Colors.grey),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 8),
+                    //   child: GestureDetector(
+                    //     onTap: () async {
+                    //       Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => PoliceLogin()));
+                    //     },
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 32),
+                    //       child: Row(
+                    //         children: const [
+                    //           Icon(
+                    //             Icons.local_police_rounded,
+                    //             size: 30,
+                    //             color: Color.fromARGB(255, 78, 206, 113),
+                    //           ),
+                    //           SizedBox(
+                    //             width: 20,
+                    //           ),
+                    //           Text(
+                    //             "Switch to Police",
+                    //             style: TextStyle(
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.w600,
+                    //                 color: Colors.grey),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 8,
                     ),

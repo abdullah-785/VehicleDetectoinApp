@@ -2,13 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/models/adminModel.dart';
+import 'package:vehicle_detection_app/models/policeModel.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
+import 'package:vehicle_detection_app/pages/AdminPages/admin_opt_verification.dart';
+import 'package:vehicle_detection_app/pages/PolicePages/police_opt_verification.dart';
 import 'package:vehicle_detection_app/pages/opt_verification.dart';
 import 'package:vehicle_detection_app/pages/profile.dart';
 import 'package:vehicle_detection_app/pages/reset_password.dart';
 import 'package:vehicle_detection_app/pages/sign_up.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -26,6 +32,32 @@ class _LoginState extends State<Login> {
 
   List usersType = ['User', 'Admin', 'Police'];
   String? selectedUserType;
+
+  AdminModel adminModel = new AdminModel();
+  PoliceModel policeModel = new PoliceModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //For Admin
+    FirebaseFirestore.instance
+        .collection("admin")
+        .doc('ntqabzT1arEobDEDZ3JJ')
+        .get()
+        .then((value) {
+      adminModel = AdminModel.fromMap(value.data());
+    });
+
+    //For Polcie
+    FirebaseFirestore.instance
+        .collection("police")
+        .doc('iigtad1gGgiT7LjpENbP')
+        .get()
+        .then((value) {
+      policeModel = PoliceModel.fromMap(value.data());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -313,13 +345,13 @@ class _LoginState extends State<Login> {
       });
       Fluttertoast.showToast(msg: "Please provide a password");
       return;
-    } else {
+    } else if (selectedUserType == 'User') {
       _auth
           .signInWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text)
           .then((uid) => {
                 // Store email for otp in global varibale
-                userEmial = _emailController.text,
+                // userEmial = _emailController.text,
                 Fluttertoast.showToast(msg: "Login Successfully"),
 
                 setState(() {
@@ -338,6 +370,40 @@ class _LoginState extends State<Login> {
           isLoading = false;
         });
       });
+    } else if (selectedUserType == 'Admin' &&
+        _emailController.text == adminModel.email &&
+        _passwordController.text == adminModel.password) {
+      Fluttertoast.showToast(msg: "Admin Login");
+      setState(() {
+        isLoading = false;
+      });
+
+      admin_global_uid = adminModel.uid;
+      admin_global_name = adminModel.name;
+      admin_global_password = adminModel.password;
+      admin_global_email = adminModel.email;
+      admin_global_imageUrl = adminModel.imageUrl;
+
+      adminEmailForOtp = _emailController.text;
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => AdminOptVerification()));
+    } else if (selectedUserType == 'Police' &&
+        _emailController.text == policeModel.email &&
+        _passwordController.text == policeModel.password) {
+      Fluttertoast.showToast(msg: "Police Login");
+      setState(() {
+        isLoading = false;
+      });
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => PoliceOptVerification()));
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      print(selectedUserType);
+      Fluttertoast.showToast(msg: "Invalid Authentication");
+      return;
     }
   }
 }

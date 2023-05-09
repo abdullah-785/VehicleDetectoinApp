@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/admin_change_password.dart';
+import 'package:vehicle_detection_app/pages/first_home_page.dart';
 import 'package:vehicle_detection_app/pages/notification_page.dart';
 import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:vehicle_detection_app/pages/AdminPages/user_detail_on_admin_panel.dart';
@@ -372,13 +373,13 @@ class _AdminPanelState extends State<AdminPanel> {
               color: Color.fromARGB(255, 78, 206, 113),
             ),
             title: Text(
-              'Switch to User',
+              'logout',
               style: listTextStyle(),
             ),
             onTap: () {
               // logout(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Setting()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FirstHomePage()));
             },
           ),
         ],
