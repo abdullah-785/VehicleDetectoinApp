@@ -16,6 +16,10 @@ import 'package:vehicle_detection_app/pages/setting.dart';
 import 'package:vehicle_detection_app/pages/sign_up.dart';
 
 class PoliceOptVerification extends StatefulWidget {
+  PoliceOptVerification({Key? key, required this.email}) : super(key: key);
+
+  final String email;
+
   @override
   State<PoliceOptVerification> createState() => _PoliceOptVerificationState();
 }
@@ -33,8 +37,6 @@ class _PoliceOptVerificationState extends State<PoliceOptVerification> {
   bool submitValid = false;
   bool isLoading = false;
   final TextEditingController _optController = TextEditingController();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +160,6 @@ class _PoliceOptVerificationState extends State<PoliceOptVerification> {
                         ),
                         onPressed: () {
                           verifyOtp();
-
-                          
                         },
                         child: const Text(
                           "Submit",
@@ -189,25 +189,27 @@ class _PoliceOptVerificationState extends State<PoliceOptVerification> {
       ),
     );
   }
-void sendEmailOtp() async {
-    myOtp.setConfig(
-      appName: "Vehicle Detection App",
-      appEmail: "19101001-038@uskt.edu.pk",
-      userEmail: policeEmailForOtp,
-      otpLength: 4,
-      otpType: OTPType.digitsOnly
-    );
 
-    if(await myOtp.sendOTP() == true){
+  void sendEmailOtp() async {
+    print(widget.email);
+    myOtp.setConfig(
+        appName: "Vehicle Detection App",
+        appEmail: "19101001-038@uskt.edu.pk",
+        userEmail: widget.email,
+        otpLength: 4,
+        otpType: OTPType.digitsOnly);
+
+    if (await myOtp.sendOTP() == true) {
       Fluttertoast.showToast(msg: "OTP send successfully");
     }
   }
 
   void verifyOtp() async {
-    if(await myOtp.verifyOTP(otp: _optController.text) == true){
+    if (await myOtp.verifyOTP(otp: _optController.text) == true) {
       Fluttertoast.showToast(msg: "Successfully");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => PolicePanel()));
-    }else{
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => PolicePanel()));
+    } else {
       Fluttertoast.showToast(msg: "Invalid OTP");
     }
   }

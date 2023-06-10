@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class UserDetailOnAdminPanel extends StatefulWidget {
   UserDetailOnAdminPanel({super.key, required this.uuid});
@@ -18,7 +19,7 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
   late DatabaseReference dbRef;
 
   User? user = FirebaseAuth.instance.currentUser;
-
+  // String? ab;
   @override
   void initState() {
     super.initState();
@@ -27,6 +28,13 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
         .ref()
         .child("userDetectionRecord")
         .child(widget.uuid);
+
+    // final ref = FirebaseStorage.instance
+    //                             .ref()
+    //                             .child("userImage")
+    //                             .child(DateTime.now().toString());
+    // await ref.putFile(file!);
+    // imageUrl = await ref.getDownloadURL();
   }
 
   @override
@@ -115,6 +123,7 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
                       child: FirebaseAnimatedList(
                           query: dbRef,
                           itemBuilder: (context, snapshot, animation, index) {
+                            List<String> ab = [];
                             return Padding(
                               padding: const EdgeInsets.all(2.0),
                               child: Card(
@@ -141,6 +150,16 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
                                       ),
                                       expanded: Column(
                                         children: [
+                                          // ab = snapshot.child("names").value.toString();
+                                          // HandleVehicleImage(ab);
+                                          // Row(
+                                          //   children: [
+                                          //     CircleAvatar(
+                                          //       backgroundImage: NetworkImage(
+                                          //           snapshot.child()),
+                                          //     )
+                                          //   ],
+                                          // ),
                                           Row(children: [
                                             Text(
                                               "Vehicle Name : ",
@@ -195,7 +214,7 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
 
                                                 //Deletion from user credentials
 
-                                                showAlertDialog(context);
+                                                // showAlertDialog(context);
                                               },
                                               child: Text("Delete"))
                                         ],
@@ -219,6 +238,14 @@ class _UserDetailOnAdminPanelState extends State<UserDetailOnAdminPanel> {
 TextStyle textStyleOfExpanded() {
   return TextStyle(fontWeight: FontWeight.bold);
 }
+
+// HandleVehicleImage(List dt) async {
+//   String imageUrl;
+//   final ref = FirebaseStorage.instance.ref().child("userImage").child(dt);
+
+//   imageUrl = await ref.getDownloadURL();
+//   return imageUrl;
+// }
 
 deleteFromNotification(String uuid, String SelectedDateTime) async {
   //for deleting the record from notification

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/admin_global_variables.dart';
 import 'package:vehicle_detection_app/GlobalVaribales/global_variables.dart';
+import 'package:vehicle_detection_app/GlobalVaribales/police_global_variable.dart';
 import 'package:vehicle_detection_app/models/adminModel.dart';
 import 'package:vehicle_detection_app/models/policeModel.dart';
 import 'package:vehicle_detection_app/models/signUpModel.dart';
@@ -125,7 +126,7 @@ class _LoginState extends State<Login> {
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                         decoration: InputDecoration(
                             label: const Text(
@@ -140,8 +141,8 @@ class _LoginState extends State<Login> {
                                     color: Color.fromARGB(255, 78, 206, 113))),
                             border: const OutlineInputBorder(),
                             prefixIcon: Container(
-                              width: 50,
-                              height: 50,
+                              width: 38,
+                              height: 38,
                               margin: const EdgeInsets.only(
                                 top: 11,
                                 bottom: 11,
@@ -155,7 +156,7 @@ class _LoginState extends State<Login> {
                               child: const Icon(
                                 Icons.email,
                                 color: Colors.white,
-                                size: 30,
+                                size: 22,
                               ),
                             ))),
                   ),
@@ -169,7 +170,7 @@ class _LoginState extends State<Login> {
                         controller: _passwordController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
                         decoration: InputDecoration(
                           label: const Text(
@@ -184,8 +185,8 @@ class _LoginState extends State<Login> {
                                   color: Color.fromARGB(255, 78, 206, 113))),
                           border: const OutlineInputBorder(),
                           prefixIcon: Container(
-                            width: 50,
-                            height: 50,
+                            width: 38,
+                            height: 38,
                             margin: const EdgeInsets.only(
                               top: 11,
                               bottom: 11,
@@ -199,7 +200,7 @@ class _LoginState extends State<Login> {
                             child: const Icon(
                               Icons.lock,
                               color: Colors.white,
-                              size: 30,
+                              size: 22,
                             ),
                           ),
                           suffixIcon: GestureDetector(
@@ -299,7 +300,7 @@ class _LoginState extends State<Login> {
                               )),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: 8,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -312,6 +313,9 @@ class _LoginState extends State<Login> {
                             color: Color.fromARGB(255, 78, 206, 113),
                             fontWeight: FontWeight.bold)),
                   ),
+                  SizedBox(
+                    height: 30,
+                  )
                 ],
               ),
             ),
@@ -390,13 +394,18 @@ class _LoginState extends State<Login> {
     } else if (selectedUserType == 'Police' &&
         _emailController.text == policeModel.email &&
         _passwordController.text == policeModel.password) {
+      // policeEmailForOtp = _emailController.text;
       Fluttertoast.showToast(msg: "Police Login");
       setState(() {
         isLoading = false;
       });
 
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => PoliceOptVerification()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PoliceOptVerification(
+                    email: _emailController.text,
+                  )));
     } else {
       setState(() {
         isLoading = false;

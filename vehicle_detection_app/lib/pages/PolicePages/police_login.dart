@@ -322,8 +322,8 @@ class _PoliceLoginState extends State<PoliceLogin> {
           isLoading = false;
         });
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => PoliceOptVerification()));
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => PoliceOptVerification()));
       }
     } catch (e) {
       setState(() {

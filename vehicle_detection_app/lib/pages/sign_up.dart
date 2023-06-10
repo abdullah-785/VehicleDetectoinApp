@@ -135,7 +135,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _nameController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: InputDecoration(
                               label: const Text(
@@ -151,8 +151,8 @@ class _SignUpState extends State<SignUp> {
                                           Color.fromARGB(255, 78, 206, 113))),
                               border: const OutlineInputBorder(),
                               prefixIcon: Container(
-                                width: 50,
-                                height: 50,
+                                width: 38,
+                                height: 38,
                                 margin: const EdgeInsets.only(
                                   top: 11,
                                   bottom: 11,
@@ -167,7 +167,7 @@ class _SignUpState extends State<SignUp> {
                                 child: const Icon(
                                   Icons.person,
                                   color: Colors.white,
-                                  size: 30,
+                                  size: 22,
                                 ),
                               ))),
                     ),
@@ -180,7 +180,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: InputDecoration(
                               label: const Text(
@@ -196,8 +196,8 @@ class _SignUpState extends State<SignUp> {
                                           Color.fromARGB(255, 78, 206, 113))),
                               border: const OutlineInputBorder(),
                               prefixIcon: Container(
-                                width: 50,
-                                height: 50,
+                                width: 38,
+                                height: 38,
                                 margin: const EdgeInsets.only(
                                   top: 11,
                                   bottom: 11,
@@ -212,7 +212,7 @@ class _SignUpState extends State<SignUp> {
                                 child: const Icon(
                                   Icons.email,
                                   color: Colors.white,
-                                  size: 30,
+                                  size: 22,
                                 ),
                               ))),
                     ),
@@ -225,7 +225,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _passwordController,
                           obscureText: true,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: InputDecoration(
                               label: const Text(
@@ -241,8 +241,8 @@ class _SignUpState extends State<SignUp> {
                                           Color.fromARGB(255, 78, 206, 113))),
                               border: const OutlineInputBorder(),
                               prefixIcon: Container(
-                                width: 50,
-                                height: 50,
+                                width: 38,
+                                height: 38,
                                 margin: const EdgeInsets.only(
                                   top: 11,
                                   bottom: 11,
@@ -257,7 +257,7 @@ class _SignUpState extends State<SignUp> {
                                 child: const Icon(
                                   Icons.lock,
                                   color: Colors.white,
-                                  size: 30,
+                                  size: 22,
                                 ),
                               ))),
                     ),
@@ -270,7 +270,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _confirmPasswordController,
                           obscureText: true,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: InputDecoration(
                               label: const Text(
@@ -286,8 +286,8 @@ class _SignUpState extends State<SignUp> {
                                           Color.fromARGB(255, 78, 206, 113))),
                               border: const OutlineInputBorder(),
                               prefixIcon: Container(
-                                width: 50,
-                                height: 50,
+                                width: 38,
+                                height: 38,
                                 margin: const EdgeInsets.only(
                                   top: 11,
                                   bottom: 11,
@@ -302,7 +302,7 @@ class _SignUpState extends State<SignUp> {
                                 child: const Icon(
                                   Icons.lock,
                                   color: Colors.white,
-                                  size: 30,
+                                  size: 22,
                                 ),
                               ))),
                     ),
@@ -315,7 +315,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _cityController,
                           keyboardType: TextInputType.text,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: InputDecoration(
                               label: const Text(
@@ -331,8 +331,8 @@ class _SignUpState extends State<SignUp> {
                                           Color.fromARGB(255, 78, 206, 113))),
                               border: const OutlineInputBorder(),
                               prefixIcon: Container(
-                                width: 50,
-                                height: 50,
+                                width: 38,
+                                height: 38,
                                 margin: const EdgeInsets.only(
                                   top: 11,
                                   bottom: 11,
@@ -347,7 +347,7 @@ class _SignUpState extends State<SignUp> {
                                 child: const Icon(
                                   Icons.location_city_rounded,
                                   color: Colors.white,
-                                  size: 30,
+                                  size: 22,
                                 ),
                               ))),
                     ),
@@ -360,7 +360,7 @@ class _SignUpState extends State<SignUp> {
                           controller: _phoneNumberController,
                           keyboardType: TextInputType.number,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: InputDecoration(
                               label: const Text(
@@ -376,8 +376,8 @@ class _SignUpState extends State<SignUp> {
                                           Color.fromARGB(255, 78, 206, 113))),
                               border: const OutlineInputBorder(),
                               prefixIcon: Container(
-                                width: 50,
-                                height: 50,
+                                width: 38,
+                                height: 38,
                                 margin: const EdgeInsets.only(
                                   top: 11,
                                   bottom: 11,
@@ -392,7 +392,7 @@ class _SignUpState extends State<SignUp> {
                                 child: const Icon(
                                   Icons.phone_android,
                                   color: Colors.white,
-                                  size: 30,
+                                  size: 22,
                                 ),
                               ))),
                     ),
@@ -407,7 +407,7 @@ class _SignUpState extends State<SignUp> {
                           maxLines: 5,
                           keyboardType: TextInputType.multiline,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                           decoration: const InputDecoration(
                             label: Text(
@@ -540,8 +540,7 @@ class _SignUpState extends State<SignUp> {
                                 Fluttertoast.showToast(
                                     msg: "Account created successfully :) ");
 
-                                StoreDataInRealTimeDatabase(
-                                    user.uid);
+                                StoreDataInRealTimeDatabase(user.uid);
 
                                 setState(() {
                                   isLoading = false;
@@ -570,7 +569,7 @@ class _SignUpState extends State<SignUp> {
                                 )),
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 8,
                     ),
                     GestureDetector(
                       onTap: () {
