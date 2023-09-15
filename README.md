@@ -1,2 +1,2 @@
 # VehicleDetectoinApp
-Vehicle Detection APP in flutter (FYP Project)
+Vehicle Detection APP in flutter and firebase. 
